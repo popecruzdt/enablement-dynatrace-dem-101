@@ -1,4 +1,4 @@
---8<-- "snippets/3-codespaces.js"
+--8<-- "snippets/send-bizevent/3-codespaces.js"
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/dynatrace-wwse/enablement-live-debugger-bug-hunting){target="_blank"}
 

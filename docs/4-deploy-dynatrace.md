@@ -1,15 +1,9 @@
-# Content
---8<-- "snippets/4-content.js"
+# Deploy Dynatrace
+--8<-- "snippets/send-bizevent/4-deploy-dynatrace.js"
 
-## Enablement content
+## Kubernetes Platform Monitoring + Application Observability
 
 In here you put your enablement content after Codespaces has been started and everything is ready and set-up.
-
-
-## How MKdocs work
-
-All the MD files are under the **docs** folder. In the main README.md file you want to give an intro on what the tutorial is about, being very short and to the point. If you add images there you reference them to doc/img folder.
-
 
 
 ### Snippets
