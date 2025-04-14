@@ -438,6 +438,7 @@ opentelemetry-demo:
 
 
   opensearch:
+    enabled: false
     podAnnotations:
       oneagent.dynatrace.com/inject: "true"
       metadata.dynatrace.com/process.technology: "elasticsearch" 
@@ -693,20 +694,22 @@ opentelemetry-collector:
     connectors:
       spanmetrics: {}
 
+    # We aren't using OpenTelemtry in this workshop, disabling otlp export with comments
+
     service:
       pipelines:
         traces:
           receivers: [otlp]
-          processors: [memory_limiter, resourcedetection/aks, k8sattributes, transform, batch]
-          exporters: [otlphttp, spanmetrics, debug] # debug
+          #processors: [memory_limiter, resourcedetection/aks, k8sattributes, transform, batch]
+          #exporters: [otlphttp, spanmetrics, debug] # debug
         metrics:
           receivers: [otlp, spanmetrics] # hostmetrics - permission denied
-          processors: [memory_limiter, cumulativetodelta, resourcedetection/aks, k8sattributes, transform, batch]
-          exporters: [otlphttp, debug] # debug
+          #processors: [memory_limiter, cumulativetodelta, resourcedetection/aks, k8sattributes, transform, batch]
+          #exporters: [otlphttp, debug] # debug
         logs:
           receivers: [otlp]
-          processors: [memory_limiter, resourcedetection/aks, k8sattributes, transform, batch]
-          exporters: [otlphttp, debug] # debug
+          #processors: [memory_limiter, resourcedetection/aks, k8sattributes, transform, batch]
+          #exporters: [otlphttp, debug] # debug
       extensions:
       - health_check
     extensions:

@@ -16,4 +16,4 @@ waitForAllPods astroshop
 #TODO: Expose the App you deployed in here 
 _exposeAstroshop
 
-printInfoSection "Your dev.container finished creating"
+printInfoSection "Your dev.container finished starting."
