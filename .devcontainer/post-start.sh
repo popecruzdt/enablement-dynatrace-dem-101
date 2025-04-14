@@ -11,9 +11,9 @@ source /workspaces/$RepositoryName/.devcontainer/util/functions.sh
 exposeMkdocs
 
 # Wait for todo to be available
-waitForAllPods astroshop
+#waitForAllPods astroshop
 
 #TODO: Expose the App you deployed in here 
-_exposeAstroshop
+#_exposeAstroshop
 
 printInfoSection "Your dev.container finished starting."
