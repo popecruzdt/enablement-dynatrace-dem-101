@@ -1,10 +1,87 @@
 # Deploy Dynatrace
 --8<-- "snippets/send-bizevent/4-deploy-dynatrace.js"
 
+Dynatrace provides integrated Log management and analytics for your Kubernetes environments by either running the OneAgent Log module or integrating with log collectors such as Fluent Bit, Dynatrace OpenTelemetry Collector, Logstash, or Fluentd.
+
+Dynatrace provides a flexible approach to Kubernetes observability where you can pick and choose the level of observability you need for your Kubernetes clusters. The Dynatrace Operator manages all the components needed to get the data into Dynatrace for you. This also applies to collecting logs from Kubernetes containers. Depending on the selected observability option, the Dynatrace Operator configures and manages the Log module to work in conjunction with or without a OneAgent on the node.
+
+<div class="grid cards" markdown>
+- [Learn More:octicons-arrow-right-24:](https://docs.dynatrace.com/docs/ingest-from/setup-on-k8s/deployment/k8s-log-monitoring)
+</div>
+
 ## Kubernetes Platform Monitoring + Application Observability
 
-In here you put your enablement content after Codespaces has been started and everything is ready and set-up.
+Kubernetes platform monitoring sets the foundation for understanding and troubleshooting your Kubernetes clusters. This setup does not include OneAgent or application-level monitoring by default, but it can be combined with other monitoring and injection approaches.
 
+!!! tip "[Kubernetes Platform Monitoring](https://docs.dynatrace.com/docs/ingest-from/setup-on-k8s/how-it-works/kubernetes-monitoring): Capabilities"
+    - Provides insights into the health and utilization of your Kubernetes clusters, including object relationships (topology)
+    - Uses the Kubernetes API and cAdvisor to get node- and container-level metrics and Kubernetes events
+    - Enables out-of-the-box alerting and anomaly detection for workloads, Pods, nodes, and clusters
+
+Application observability focuses on monitoring application-level metrics by injecting code modules into application Pods. This mode offers multiple injection strategies (automatic, runtime, and build-time) to collect application-specific metrics. For infrastructure-level insights, combine it with Kubernetes platform monitoring.
+
+!!! tip "[Application Observability](https://docs.dynatrace.com/docs/ingest-from/setup-on-k8s/how-it-works/application-monitoring): Capabilities"
+    - Dynatrace injects code modules into Pods using the Kubernetes admission controller.
+    - Get granular control over the instrumented Pods using namespaces and annotations.
+    - Route Pod metrics to different Dynatrace environments within the same Kubernetes cluster.
+    - Enable data enrichment for Kubernetes environments.
+
+### Start Monitoring Kubernetes
+
+In your Dynatrace tenant, launch the `Kubernetes` app.  From the Overview tab, click on `Add cluster`.
+
+SCREENSHOT
+
+**1. Select distribution**
+
+Choose `Other distributions` as your distribution, as we will be deploying Dynatrace on a generic Kind Kubernetes cluster.
+
+**2. Select observability options**
+
+Choose `Kubernetes platform monitoring + Application observability` as your observability option.  This will define your Dynakube spec/configuration.
+
+Toggle the `Log Management and Analytics` flag/setting to `Enabled`.  Expand the option and select `Fully managed with Dynatrace Log Module`.
+
+Check the box for `Restrict Log monitoring to certain resources`.  In the `Namespaces` field, type `astroshop`.  This will filter log ingestion on logs related to the `astroshop` Kubernetes namespace.
+
+Toggle the `Extensions` flag/setting to `Disabled`.  We will not be using this feature in this lab.
+
+SCREENSHOT
+
+**3. Configure cluster**
+
+Give your Kubernetes cluster a name, enter `enablement-log-ingest-101`.
+
+**4. Install Dynatrace Operator**
+
+Generate a Dynatrace Operator Token.  Copy and save the value somewhere, in case you need it.  The value will automatically be added to the `dynakube.yaml` file.
+
+Generate a Data Ingest Token.  Copy and save the value somewhere, in case you need it.  The value will automatically be added to the `dynakube.yaml` file.
+
+Download the `dynakube.yaml` file.
+
+Copy the `helm install dynatrace-operator` command to your clipboard.  Use the command from your Dynatrace tenant, but it should look similar to this:
+```sh
+helm install dynatrace-operator oci://public.ecr.aws/dynatrace/dynatrace-operator \
+--create-namespace \
+--namespace dynatrace \
+--atomic
+```
+
+SCREENSHOT
+
+### Deploy Dynatrace Operator
+
+Navigate back to your GitHub Codespaces instance.  From the terminal, paste the `helm install dynatrace-operator` command.
+
+SCREENSHOT
+
+Validate the new Dynatrace pods are running:
+```sh
+kubectl get pods -n dynatrace
+```
+
+SCREENSHOT
 
 ### Snippets
 
