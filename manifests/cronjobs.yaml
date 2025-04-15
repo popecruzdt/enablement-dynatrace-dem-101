@@ -1,0 +1,49 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cronjobs
+  labels:
+    name: cronjobs
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: log-message-cronjob
+  namespace: cronjobs
+spec:
+  schedule: "*/3 * * * *"  # Runs every X minutes
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            logs.dynatrace.io/ingest: "true"
+        spec:
+          containers:
+          - name: busybox
+            image: busybox
+            command: ["/bin/sh", "-c"]
+            args: ["echo $(date -u '+%Y-%m-%dT%H:%M:%SZ') 'INFO Log message from cronjob.  email=example@dynatrace.io Ending job.'"]
+          restartPolicy: OnFailure
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: timestamp-cronjob
+  namespace: cronjobs
+spec:
+  schedule: "*/4 * * * *"  # Runs every X minutes
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            logs.dynatrace.io/ingest: "true"
+        spec:
+          containers:
+          - name: busybox
+            image: busybox
+            command: ["/bin/sh", "-c"]
+            args: ["echo $(date -u '+%Y-%m-%dT%H:%M:%SZ') 'INFO BatchJob JOB_NAME=AddBanks , JOB_BODY={ \n   \"id\" : \"xxxxxx\", \n   \"name\": { \n     \"first\": \"TEST\" \n   }, \n   \"email\": \"xxxxxxxxxxxxx\", \n   \"registrationStatus\": \"Log Record Line Break Expected!\", \n   \"registrationDate\": \"' $(date -u '+%Y-%m-%dT%H:%M:%SZ') '\", \n   \"termsConditions\": false, \n   \"customerLevelCode\": \"XXX\", \n   \"nameMatchIndicator\": false, \n   \"complianceData\": { \n     \"verifications\": [ \n       { \n         \"channelType\": \"1\" \n       } \n     ], \n     \"cuba\": false, \n     \"isDocReceived\": false \n   }, \n   \"loyaltyDetails\": { \n     \"Log record line break expected\": { \n       \"cardEnrolledDate\": \"' $(date -u '+%Y-%m-%dT%H:%M:%SZ') '\", \n       \"enrollmentType\": \"EXPLICIT\", \n       \"cardStatus\": \"INACTIVE\", \n     } \n   } \n } \n END OF JOB_BODY \n host = job_host@dynatrace.io'"]
+          restartPolicy: OnFailure
