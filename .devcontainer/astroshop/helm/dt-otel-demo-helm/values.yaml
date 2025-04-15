@@ -703,7 +703,7 @@ opentelemetry-collector:
           #processors: [memory_limiter, resourcedetection/aks, k8sattributes, transform, batch]
           #exporters: [otlphttp, spanmetrics, debug] # debug
         metrics:
-          receivers: [otlp, spanmetrics] # hostmetrics - permission denied
+          receivers: [otlp] #, spanmetrics] # hostmetrics - permission denied
           #processors: [memory_limiter, cumulativetodelta, resourcedetection/aks, k8sattributes, transform, batch]
           #exporters: [otlphttp, debug] # debug
         logs:
