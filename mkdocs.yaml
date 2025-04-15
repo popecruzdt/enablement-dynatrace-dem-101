@@ -6,9 +6,10 @@ nav:
   - '2. Getting started': 2-getting-started.md
   - '3. Codespaces': 3-codespaces.md
   - '4. Deploy Dynatrace': 4-deploy-dynatrace.md
-  - '5. Cleanup': cleanup.md
-  - '6. Resources': resources.md
-  - "7. What's next?": whats-next.md
+  - '5. Configure Dynatrace': 5-configure-dynatrace.md
+  - '6. Analyze Logs': 6-analyze-logs.md
+  - '7. Cleanup': cleanup.md
+  - '8. Resources': resources.md
 theme:
   name: material
   custom_dir: docs/overrides
