@@ -205,6 +205,24 @@ Now that Dynatrace is deployed, let's refresh/recycle the application pods for `
 kubectl delete pods -n astroshop --field-selector="status.phase!=Running"
 ```
 
+### Validate Log Ingest
+
+In your Dynatrace tenant, return to the `Kubernetes` app.  From the Cluster overview tab, click on `Namespaces` to open the list of Namespaces on the Cluster.
+
+![List Namespaces](../img/deploy-dynatrace_k8s_cluster_list_namespaces.png)
+
+From the list of Namespaces, click on `astroshop`.  From the Namespace pop-out, click the `Logs` tab.  Verify in the chart that logs are being ingested for the `astroshop` namespace.  Click on `Run query` on the **Show logs in current context** option.
+
+![Namespace Logs](../img/deploy-dynatrace_k8s_namespace_logs.png)
+
+Validate log data after running the query.
+
+![Namespace Logs Query](../img/deploy-dynatrace_k8s_namespace_query_logs.png)
+
+### Continue
+
+In the next section, we'll configure Log Monitoring in Dynatrace.
+
 <div class="grid cards" markdown>
-- [Continue to configuring Dynatrace Log Monitoring]:octicons-arrow-right-24:](4-content.md)
+- [Continue to configuring Dynatrace Log Monitoring:octicons-arrow-right-24:](5-configure-dynatrace.md)
 </div>
