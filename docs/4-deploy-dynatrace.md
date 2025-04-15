@@ -30,7 +30,7 @@ Application observability focuses on monitoring application-level metrics by inj
 
 In your Dynatrace tenant, launch the `Kubernetes` app.  From the Overview tab, click on `Add cluster`.
 
-![Add Cluster](../docs/img/deploy-dynatrace_k8s_add_cluster.png)
+![Add Cluster](../img/deploy-dynatrace_k8s_add_cluster.png)
 
 **1. Select distribution**
 
@@ -46,7 +46,7 @@ Check the box for `Restrict Log monitoring to certain resources`.  In the `Names
 
 Toggle the `Extensions` flag/setting to `Disabled`.  We will not be using this feature in this lab.
 
-![Select Distribution](../docs/img/deploy-dynatrace_k8s_select_distribution.png)
+![Select Distribution](../img/deploy-dynatrace_k8s_select_distribution.png)
 
 **3. Configure cluster**
 
@@ -68,13 +68,13 @@ helm install dynatrace-operator oci://public.ecr.aws/dynatrace/dynatrace-operato
 --atomic
 ```
 
-![Configure Cluster](../docs/img/deploy-dynatrace_k8s_configure_cluster.png)
+![Configure Cluster](../img/deploy-dynatrace_k8s_configure_cluster.png)
 
 ### Deploy Dynatrace Operator
 
 Navigate back to your GitHub Codespaces instance.  From the terminal, paste the `helm install dynatrace-operator` command and execute it.
 
-![Deploy Dynatrace Operator](../docs/img/deploy-dynatrace_k8s_deploy_dt_operator.png)
+![Deploy Dynatrace Operator](../img/deploy-dynatrace_k8s_deploy_dt_operator.png)
 
 Validate the new Dynatrace pods are running:
 ```sh
@@ -85,7 +85,7 @@ kubectl get pods -n dynatrace
 
 Locate the `dynakube.yaml` file that you downloaded from your tenant.  With the file (directory) open, navigate back to your GitHub Codespaces instance.  Click and hold to drag and drop the `dynakube.yaml` file into your Codespaces instance.
 
-![Copy Dynakube](../docs/img/deploy-dynatrace_copy_dynakube.gif)
+![Copy Dynakube](../img/deploy-dynatrace_copy_dynakube.gif)
 
 Deploy the Dynakube using `kubectl`.
 ```sh
@@ -160,7 +160,7 @@ templates:
 
 !!! warning "ImagePullBackOff Error"
     In case you encounter an **ImagePullBackOff** error, check `public.ecr.aws` to make sure the container image with that tag exists.  If not, change the value to use an existing one.
-    ![Container Registry](../docs/img/deploy-dynatrace_log_module_container_registry.png)
+    ![Container Registry](../img/deploy-dynatrace_log_module_container_registry.png)
 
 Enabling the option **Restrict Log monitoring to certain resources** option will add `spec.logMonitoring.ingestRuleMatchers` to the Dynakube definition.
 
@@ -187,15 +187,15 @@ As of Dynatrace Operator version `1.4.2` and Dynatrace version `1.311`, the Log 
 
 In your Dynatrace tenant, return to the `Kubernetes` app.  Click on the `Explorer` tab.  In your list of Clusters, click on `enablement-log-ingest-101`.
 
-![Clusters](../docs/img/deploy-dynatrace_k8s_clusters.png)
+![Clusters](../img/deploy-dynatrace_k8s_clusters.png)
 
 From the Cluster overview pop-out, in the top right corner, click on the `...` ellipsis icon, and then click on the drilldown for **Log ingest rules**.
 
-![Log Ingest Rules Drilldown](../docs/img/deploy-dynatrace_k8s_cluster_drill_log_ingest_rules.png)
+![Log Ingest Rules Drilldown](../img/deploy-dynatrace_k8s_cluster_drill_log_ingest_rules.png)
 
 This will open the `Kubernetes Classic` app and the connection settings for the Kubernetes Cluster.  In the Log Monitoring settings, the Log Ingest rules are shown.  You'll find the rule that was created by the Dynakube that matches the configuration in the `dynakube.yaml` spec.  It should be configured to only ingest logs from the `astroshop` namespace.
 
-![Log Ingest Rule](../docs/img/deploy-dynatrace_k8s_cluster_log_ingest_rule_setting.png)
+![Log Ingest Rule](../img/deploy-dynatrace_k8s_cluster_log_ingest_rule_setting.png)
 
 ### Refresh Application Pods
 
