@@ -31,10 +31,11 @@ installMkdocs
 # The Astroshop keeping changes of demo.live needs certmanager
 certmanagerInstall
 certmanagerEnable
-#_deployAstroshop
+_deployAstroshop
 
 # If you want to deploy your own App, just create a function in the functions.sh file and call it here.
 # deployMyCustomApp
+deployCronJobs
 
 # e2e testing
 # If the codespace is created (eg. via a Dynatrace workflow)

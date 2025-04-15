@@ -219,7 +219,7 @@ Validate log data after running the query.
 
 ![Namespace Logs Query](../img/deploy-dynatrace_k8s_namespace_query_logs.png)
 
-### Continue
+## Continue
 
 In the next section, we'll configure Log Monitoring in Dynatrace.
 

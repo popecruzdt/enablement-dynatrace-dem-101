@@ -593,3 +593,9 @@ showOpenPorts(){
 deployGhdocs(){
   mkdocs gh-deploy
 }
+
+### custom functions for this repo/lab
+
+deployCronJobs() {
+  kubectl apply -f $CODESPACE_VSCODE_FOLDER/.devcontainer/manifests/cronjobs.yaml
+}
