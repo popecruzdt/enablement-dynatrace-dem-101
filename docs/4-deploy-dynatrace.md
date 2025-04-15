@@ -83,6 +83,86 @@ kubectl get pods -n dynatrace
 
 SCREENSHOT
 
+### Deploy Dynakube
+
+Locate the `dynakube.yaml` file that you downloaded from your tenant.  With the file (directory) open, navigate back to your GitHub Codespaces instance.  Click and hold to drag and drop the `dynakube.yaml` file into your Codespaces instance.
+
+SCREENSHOT GIF
+
+Deploy the Dynakube using `kubectl`.
+```sh
+kubectl apply -f dynakube.yaml
+```
+
+
+
+| NAME                                             | READY | STATUS                  | RESTARTS | AGE  |
+|--------------------------------------------------|-------|-------------------------|----------|------|
+| dynatrace-oneagent-csi-driver-7b9kx              | 4/4   | Running                 | 0        | 3m5s |
+| dynatrace-operator-747d795b5c-hrmtl              | 1/1   | Running                 | 0        | 3m5s |
+| dynatrace-webhook-5b697d4b9d-6v95s               | 1/1   | Running                 | 0        | 3m5s |
+| dynatrace-webhook-5b697d4b9d-nvslc               | 1/1   | Running                 | 0        | 3m5s |
+| enablement-log-ingeset-101-activegate-0          | 0/1   | Pending                 | 0        | 90s  |
+| enablement-log-ingeset-101-logmonitoring-dxrsh   | 0/1   | Init:ImagePullBackOff   | 0        | 89s  |
+
+### Dynakube Log Module Spec
+
+Enabling **Log Management and Analytics** with the option `Fully managed with Dynatrace Log Module` will add the Log Module to the Dynakube spec.
+
+```yaml
+---
+apiVersion: dynatrace.com/v1beta3
+kind: DynaKube
+metadata:
+  name: enablement-log-ingest-101
+  namespace: dynatrace
+  annotations:
+    feature.dynatrace.com/k8s-app-enabled: "true"
+spec:
+  apiUrl: https://<tenant>/api
+  metadataEnrichment:
+    enabled: true
+  oneAgent:
+    applicationMonitoring: {}
+  activeGate:
+    capabilities:
+      - routing
+      - kubernetes-monitoring
+    resources:
+      requests:
+        cpu: 100m
+        memory: 512Mi
+      limits:
+        cpu: 500m
+        memory: 768Mi
+  templates:
+    logMonitoring:
+      imageRef:
+        repository: public.ecr.aws/dynatrace/dynatrace-logmodule
+        tag: 1.309.66.20250401-150134
+  logMonitoring:
+    ingestRuleMatchers:
+      - attribute: k8s.namespace.name
+        values:
+          - astroshop
+```
+
+The Log Module runs as a container in a standalone pod (as part of a daemonset) on each node.  The `spec.templates.imageRef` defines the container image and tag to be used.
+
+```yaml
+templates:
+    logMonitoring:
+      imageRef:
+        repository: public.ecr.aws/dynatrace/dynatrace-logmodule
+        tag: 1.309.66.20250401-150134
+```
+
+!!! warning "ImagePullBackOff Error"
+    In case you encounter an **ImagePullBackOff** error, check `public.ecr.aws` to make sure the container image with that tag exists.  If not, change the value to use an existing one.
+    SCREENSHOT
+
+Enabling the option **Restrict Log monitoring to certain resources** option will add `spec.logMonitoring.ingestRuleMatchers` to the Dynakube definition.
+
 ### Snippets
 
 Snippets allow you to reuse text, banners, code or pieces of code.
