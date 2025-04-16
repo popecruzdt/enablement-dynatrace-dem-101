@@ -157,47 +157,7 @@ In the event that a multi-line log record contains another supported timestamp, 
 
 In our CronJob logs, the `timestamp-cronjob` writes a multi-line log record that contains multiple timestamps.  Dynatrace treats the extra timestamps as new log lines.  We want this log record to be treated as a single record.
 
-Record 1:
-```text
-$TIMESTAMP INFO BatchJob JOB_NAME=AddBanks , JOB_BODY={ 
-   "id" : "xxxxxx", 
-   "name": { 
-     "first": "TEST" 
-   }, 
-   "email": "xxxxxxxxxxxxx", 
-   "registrationStatus": "Log Record Line Break Expected!", 
-```
-
-Record 2:
-```text
-   "registrationDate": " $TIMESTAMP ", 
-   "termsConditions": false, 
-   "customerLevelCode": "XXX", 
-   "nameMatchIndicator": false, 
-   "complianceData": { 
-     "verifications": [ 
-       { 
-         "channelType": "1" 
-       } 
-     ], 
-     "cuba": false, 
-     "isDocReceived": false 
-   }, 
-   "loyaltyDetails": { 
-     "Log record line break expected": { 
-```
-
-Record 3:
-```text
-       "cardEnrolledDate": " $TIMESTAMP ", 
-       "enrollmentType": "EXPLICIT", 
-       "cardStatus": "INACTIVE", 
-     } 
-   } 
- } 
- END OF JOB_BODY 
- host = 7a145cace01782517c351e02a9b217041767431359c6ab9f9cb175b270eaf598
- ```
+![Three Log Records](../img/configure-dynatrace_logs_query_3_timestamp_logs.png)
 
 ### Timestamp Configuration Rule
 
