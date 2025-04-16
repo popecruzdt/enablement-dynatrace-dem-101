@@ -20,7 +20,7 @@ Log ingest rules are ordered configurations processed from top to bottom. For hi
 
 In your Dynatrace tenant, open the (new) `Settings` app.  Select the `Collect and capture` submenu.  Click on the `Log monitoring` menu.  Click on `Log ingest rules` to open the setting in the `Settings Classic` app.
 
-![Log Monitoring Settings](../docs/img/configure-dynatrace_settings_collect_and_capture.png)
+![Log Monitoring Settings](../img/configure-dynatrace_settings_collect_and_capture.png)
 
 Here you will find the log ingest rules set at the environment-level.  Rules configured here will be inherited by every host group, Kubernetes cluster, and host in the environment.  However, these settings can be overridden at the granular entity-level.
 
@@ -30,7 +30,7 @@ Click on `Hierarchy and overrides`.  Locate your Kubernetes cluster override for
 
 Add a new rule that will capture logs from specific pods within the `cronjobs` namespace.  Click on `Add rule`.
 
-![Add Rule](../docs/img/configure-dynatrace_settings_log_ingest_cluster_rules.png)
+![Add Rule](../img/configure-dynatrace_settings_log_ingest_cluster_rules.png)
 
 Configure the rule with the following details:
 
@@ -56,7 +56,7 @@ Kubernetes pod annotation is
 logs.dynatrace.io/ingest=true
 ```
 
-![Create Rule](../docs/img/configure-dynatrace_settings_log_ingest_create_rule.png)
+![Create Rule](../img/configure-dynatrace_settings_log_ingest_create_rule.png)
 
 This rule will enable the Log Module to collect logs from pods that belong to the `cronjobs` namespace **AND** have the annotation `logs.dynatrace.io/ingest: true`.
 
@@ -131,7 +131,7 @@ cronjobs
 
 The advantage of using the SHA-256 masking type is that every unique value (email address) will produce a unique hash value.  This may enable you to see if the log contains the same email address or different email addresses.  However, you will obviously not be able to decrypt what that email address is, keeping it secure!
 
-!!! tip "Built In Sensitive Data Masking"
+!!! tip "Built-In Sensitive Data Masking"
     Dynatrace includes built-in sensitive data masking rules for email address, credit cards, URL queries, IBAN, and API-Tokens at the Environment-level.  If these settings are enabled, that may have already caused the email address in the CronJob log to be masked.
     ![Built In Masking](../img/configure-dynatrace_settings_log_sensitive_data_masking_builtin.png)
 
@@ -158,7 +158,7 @@ In the event that a multi-line log record contains another supported timestamp, 
 In our CronJob logs, the `timestamp-cronjob` writes a multi-line log record that contains multiple timestamps.  Dynatrace treats the extra timestamps as new log lines.  We want this log record to be treated as a single record.
 
 Record 1:
-```log
+```text
 $TIMESTAMP INFO BatchJob JOB_NAME=AddBanks , JOB_BODY={ 
    "id" : "xxxxxx", 
    "name": { 
@@ -169,7 +169,7 @@ $TIMESTAMP INFO BatchJob JOB_NAME=AddBanks , JOB_BODY={
 ```
 
 Record 2:
-```log
+```text
    "registrationDate": " $TIMESTAMP ", 
    "termsConditions": false, 
    "customerLevelCode": "XXX", 
@@ -188,7 +188,7 @@ Record 2:
 ```
 
 Record 3:
-```log
+```text
        "cardEnrolledDate": " $TIMESTAMP ", 
        "enrollmentType": "EXPLICIT", 
        "cardStatus": "INACTIVE", 
@@ -276,7 +276,7 @@ k8s.namespace.name = dynatrace
 
 ![Dynatrace Logs](../img/configure-dynatrace_logs_query_dynatrace_logs.png)
 
-These logs can help with troubleshooting any observability issues on the Kubernetes cluster.  However, it is the log module that is collecting these logs, so if the log module is not working - the logs won't be shipped to Dynatrace!
+These logs can help with troubleshooting any observability issues on the Kubernetes cluster.  However, it is the Log Module that is collecting these logs, so if the Log Module is not working - the logs won't be shipped to Dynatrace!
 
 ## Continue
 
