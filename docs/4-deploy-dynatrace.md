@@ -202,7 +202,7 @@ This will open the `Kubernetes Classic` app and the connection settings for the 
 Now that Dynatrace is deployed, let's refresh/recycle the application pods for `astroshop` to inject the OneAgent code modules.
 
 ```sh
-kubectl delete pods -n astroshop --field-selector="status.phase!=Running"
+kubectl delete pods -n astroshop --field-selector="status.phase=Running"
 ```
 
 ### Validate Log Ingest
