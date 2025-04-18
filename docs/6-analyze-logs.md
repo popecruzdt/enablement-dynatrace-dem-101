@@ -17,8 +17,6 @@ Locate the flag **paymentServiceFailure**.  Click the drop down box and change i
 
 Modern applications run in distributed environments. They generate observability data like metrics, logs and traces. Having all data in one place is often not enough because manual correlation can be required. Understanding the behavior and performance of distributed applications is important for effective troubleshooting. Dynatrace automatically connects and puts data in context for a smooth troubleshooting and analytics experience. This automated approach not only streamlines troubleshooting but also enhances the overall analytics experience, enabling teams to optimize application performance with ease.
 
-https://docs.dynatrace.com/docs/analyze-explore-automate/logs/lma-use-cases/lma-e2e-troubleshooting
-
 <div class="grid cards" markdown>
 - [Learn More:octicons-arrow-right-24:](https://docs.dynatrace.com/docs/analyze-explore-automate/logs/lma-use-cases/lma-e2e-troubleshooting)
 </div>
@@ -37,7 +35,7 @@ Relevant logs are queried based on the impacted entity using a pre-built DQL que
 
 ![Problem Logs](../img/analyze-logs_active_problem_query_logs.png)
 
-!!! tip "Davis Co-Pilot Problem Explanation
+!!! tip "Davis Co-Pilot Problem Explanation"
     [Davis CoPilot provides clear summaries of problems](https://www.dynatrace.com/news/blog/davis-copilot-expands-get-answers-and-insights-across-the-dynatrace-platform/), their root causes, and the suggested remediation steps. Davis CoPilot explains individual issues in clear language from the problem details page and can perform a comparative analysis when multiple problems are selected from the list view. This helps you identify common root causes and propose corrective steps without relying on a team of experts and waiting for hours for critical insights.
 
 If your Dynatrace tenant has Davis Co-Pilot capabilities enabled (optional, not part of this lab) then you should see a button that says `Explain`.  Click it to open a prompt that will automatically ask Davis Co-Pilot to explain the problem in natural language and suggest remediation steps! 
@@ -94,6 +92,8 @@ This span belongs to the `PaymentService`.  Open the service in the (new) `Servi
 ![Open Services App](../img/analyze-logs_distributed_traces_view_service.png)
 
 The `Services` app opens with the `PaymentService` selected.  Here you can view the failure rate, response time, and throughput metrics for this service.  From here, you can drill down into more distributed traces for this service, find any correlated log records, view infrastructure health including Kubernetes entity details, and understand the topology and dependencies of this service.
+
+![Services App](../img/analyze-logs_services_paymentservice.png)
 
 Having logs, together and in context with metrics and traces, is essential to having a unified observability strategy.  Logs, metrics, and traces together is nice to have, but correlating them together and in context with application and infrastructure topology greatly speeds up troubleshooting.  Logs in context allow you to make better real-time business decisions by understanding business outcomes correlated with underlying system health.
 
