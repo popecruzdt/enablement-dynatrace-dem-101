@@ -599,3 +599,35 @@ deployGhdocs(){
 deployCronJobs() {
   kubectl apply -f $CODESPACE_VSCODE_FOLDER/.devcontainer/manifests/cronjobs.yaml
 }
+
+# delete running pods for namespace and then wait for new ones to be running
+deleteRunningPods() {
+  # Function to filter by Namespace, default is ALL
+  if [[ $# -eq 1 ]]; then
+    namespace_filter="-n $1"
+  else
+    printError "Namespace argument not specified!  Exiting."
+    exit 1
+  fi
+  RETRY=0
+  RETRY_MAX=60
+  # Get all pods, count and invert the search for not running nor completed. Status is for deleting the last line of the output
+  CMD="kubectl delete pods --field-selector="status.phase=Running" $namespace_filter 2>&1 | grep -c -v -E '(Running|Completed|Terminating|STATUS)'"
+  printInfo "Checking and wait for all pods in \"$namespace_filter\" to run."
+  while [[ $RETRY -lt $RETRY_MAX ]]; do
+    pods_not_ok=$(eval "$CMD")
+    if [[ "$pods_not_ok" == '0' ]]; then
+      printInfo "All pods are running."
+      break
+    fi
+    RETRY=$(($RETRY + 1))
+    printWarn "Retry: ${RETRY}/${RETRY_MAX} - Wait 10s for $pods_not_ok pods to finish or be in state Running ..."
+    sleep 10
+  done
+
+  if [[ $RETRY == $RETRY_MAX ]]; then
+    printError "Following pods are not still not running. Please check their events."
+    kubectl get pods --field-selector=status.phase!=Running -A
+    exit 1
+  fi
+}

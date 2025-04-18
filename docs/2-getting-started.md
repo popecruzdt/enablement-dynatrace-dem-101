@@ -11,6 +11,10 @@ As a Professor I highly recommend to install VSCode locally and always open the 
     Now we are ready to launch the Codespace!
 
 
+## Continue
+
+In the next section, we'll launch our Codespaces instance.
+
 <div class="grid cards" markdown>
-- [Let's launch Codespace:octicons-arrow-right-24:](3-codespaces.md)
+- [Continue to Codespaces:octicons-arrow-right-24:](3-codespaces.md)
 </div>

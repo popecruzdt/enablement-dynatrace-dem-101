@@ -70,6 +70,11 @@ exposeTodoApp(){
   nohup kubectl port-forward service/todoapp 8080:8080  -n todoapp --address="0.0.0.0" > /tmp/kubectl-port-forward.log 2>&1 &
 }
 ```
+
+## Continue
+
+In the next section, we'll deploy Dynatrace on our Kubernetes cluster to start collecting logs (and more!).
+
 <div class="grid cards" markdown>
-- [Let's start our Bug hunting quest:octicons-arrow-right-24:](4-content.md)
+- [Continue to deploy Dynatrace:octicons-arrow-right-24:](4-deploy-dynatrace.md)
 </div>

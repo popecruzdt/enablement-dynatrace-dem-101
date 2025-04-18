@@ -9,7 +9,6 @@ nav:
   - '5. Configure Dynatrace': 5-configure-dynatrace.md
   - '6. Analyze Logs': 6-analyze-logs.md
   - '7. Cleanup': cleanup.md
-  - '8. Resources': resources.md
 theme:
   name: material
   custom_dir: docs/overrides
