@@ -69,6 +69,10 @@ However, for this use case, configuring this rule alone will not start capturing
 
 An enhancement to the log module for Kubernetes introduces a feature that enables Dynatrace to capture all container logs, even those that do not meet the autodiscovery requirements.  The logs from the CronJobs are written by a container echoing a message to stdout.  This prevents them from meeting the autodiscovery requirements, thus we will need to enable the feature flag to collect all container logs.
 
+<div class="grid cards" markdown>
+- [Learn More:octicons-arrow-right-24:](https://docs.dynatrace.com/docs/analyze-explore-automate/logs/lma-log-ingestion/lma-log-ingestion-via-oa/lma-feature-flags)
+</div>
+
 In your Dynatrace tenant, return to the Kubernetes settings for your cluster where you configured the log ingest rule.  In the Log Monitoring section, click on `Log module feature flags`.  Enable the setting `Collect all container logs`.  Click on `Save changes`.
 
 ![Log Module Feature Flags](../img/configure-dynatrace_settings_log_module_feature_flags.png)
@@ -90,6 +94,10 @@ k8s.namespace.name = cronjobs
 Specific log messages may include user names, email addresses, URL parameters, and other information that you may not want to disclose. Log Monitoring features the ability to mask any information by modifying the configuration file on each OneAgent that handles information you consider to be sensitive.
 
 Masking is performed directly on OneAgent, ensuring that sensitive data are never ingested into the system.
+
+<div class="grid cards" markdown>
+- [Learn More:octicons-arrow-right-24:](https://docs.dynatrace.com/docs/analyze-explore-automate/logs/lma-log-ingestion/lma-log-ingestion-via-oa/lma-sensitive-data-masking)
+</div>
 
 Within our CronJob logs, the `log-message-cronjob` writes out a message containing an email address.  While this email address isn't real, we can use it as an example of sensitive data masking.
 
@@ -154,6 +162,10 @@ The logs now contain the hashed value of the email address, `03cb5558c834be37963
 By default, log monitoring automatically detects only the most common and unambiguous subset of date formats supported. Each time a timestamp pattern is detected, the line will be treated as the beginning of the log entry. All following lines without a detected timestamp will be treated as a continuation and reported as a single multi-line log record.
 
 In the event that a multi-line log record contains another supported timestamp, it is likely that Dynatrace will treat that line as a new log record.  If this is not the desired result, a timestamp configuration rule can be created to change this behavior.
+
+<div class="grid cards" markdown>
+- [Learn More:octicons-arrow-right-24:](https://docs.dynatrace.com/docs/analyze-explore-automate/logs/lma-log-ingestion/lma-log-ingestion-via-oa/lma-timestamp-configuration)
+</div>
 
 In our CronJob logs, the `timestamp-cronjob` writes a multi-line log record that contains multiple timestamps.  Dynatrace treats the extra timestamps as new log lines.  We want this log record to be treated as a single record.
 
@@ -237,6 +249,336 @@ k8s.namespace.name = dynatrace
 ![Dynatrace Logs](../img/configure-dynatrace_logs_query_dynatrace_logs.png)
 
 These logs can help with troubleshooting any observability issues on the Kubernetes cluster.  However, it is the Log Module that is collecting these logs, so if the Log Module is not working - the logs won't be shipped to Dynatrace!
+
+## Configure OpenPipeline
+
+OpenPipeline is the Dynatrace data handling solution to seamlessly ingest and process data from different sources, at any scale, and in any format in the Dynatrace Platform.
+
+Dynatrace OpenPipeline can reshape incoming data for better understanding, processing, and analysis. OpenPipeline processing is based on rules that you create and offers a flexible way of extracting value from raw records.
+
+![OpenPipeline](../img/configure-dynatrace_openpipeline_architecture.png)
+
+<div class="grid cards" markdown>
+- [Learn More:octicons-arrow-right-24:](https://docs.dynatrace.com/docs/discover-dynatrace/platform/openpipeline)
+</div>
+
+The logs written by the `paymentservice` within the `astroshop` application are missing some important context information, making them a great candidate for ingest processing with OpenPipeline.
+
+Sample log snippet:
+```json
+{"level":30,"time":1744936198898,"pid":1,"hostname":"astroshop-paymentservice-7dbc46ff58-4msdx","dt.entity.host":"HOST-815866271C8841E1","dt.entity.kubernetes_cluster":"KUBERNETES_CLUSTER-FD9401B313C80ED9","dt.entity.process_group":"PROCESS_GROUP-F8DE358ACD7BA713","dt.entity.process_group_instance":"PROCESS_GROUP_INSTANCE-BE5376E9380A3175","dt.kubernetes.cluster.id":"dfc521db-c6be-471f-9e20-24f62e45bb69","dt.kubernetes.workload.kind":"deployment","dt.kubernetes.workload.name":"astroshop-paymentservice","k8s.cluster.name":"enablement-log-ingest-101","k8s.cluster.uid":"dfc521db-c6be-471f-9e20-24f62e45bb69","k8s.container.name":"paymentservice","k8s.namespace.name":"astroshop","k8s.node.name":"kind-control-plane","k8s.pod.name":"astroshop-paymentservice-7dbc46ff58-4msdx","k8s.pod.uid":"8992e584-dc50-48f9-b243-1facae6d1ba5","k8s.workload.kind":"deployment","k8s.workload.name":"astroshop-paymentservice","process.technology":"nodejs","dt.trace_id":"6977c25e6f6a6b4fcc0117087990d95b","dt.span_id":"54f824774f71e56c","dt.trace_sampled":"true","transactionId":"f762bcae-fdb7-4f55-9576-a99273683d12","cardType":"visa","lastFourDigits":"1278","amount":{"units":{"low":1173,"high":0,"unsigned":false},"nanos":999999999,"currencyCode":"USD"},"msg":"Transaction complete."}
+```
+
+### Configure Custom Logs Pipeline
+
+In your Dynatrace tenant, open the `OpenPipeline` app.  Select `Logs` and click on the `Pipelines` tab.  Add a new Pipeline by clicking on `+ Pipeline`.
+
+![OpenPipeline Logs Pipelines](../img/configure-dynatrace_opp_logs_pipelines.png)
+
+Give the new pipeline a name, `AstroShop PaymentService`.  Click on the `Processing` tab to create processing rules.
+
+![Name Your Pipeline](../img/configure-dynatrace_opp_name_pipeline.png)
+
+!!! tip "Save Your Configuration"
+    It is highly recommended to save your progress often by clicking the `Save` button and then re-opening your pipeline configuration to avoid losing your changes!
+
+#### Processing Rules
+
+Add a new processor rule by clicking on `+ Processor`.  Configure the processor rule with the following:
+
+Name:
+```text
+NodeJS
+```
+
+Type:
+```text
+Technology Bundle: NodeJS
+```
+
+Matching condition:
+```text
+Pre-defined: matchesValue(process.technology, "Node.js") or matchesValue(process.technology, "nodejs")
+```
+
+This processor rule will apply built-in pattern detection for known NodeJS technology log frameworks to parse and enrich the log content.  In our example, this will be important to extract the numeric `loglevel` into a recognizable string value; such as "INFO" or "WARN".
+
+![NodeJS Processor](../img/configure-dynatrace_opp_nodejs.png)
+
+Add a new processor rule by clicking on `+ Processor`.  Configure the processor rule with the following:
+
+Name:
+```text
+Parse Content
+```
+
+Type:
+```text
+DQL
+```
+
+Matching condition:
+```text
+isNotNull(log.raw_level) and loglevel != "NONE" and isNotNull(message)
+```
+
+DQL processor definition:
+```text
+parse content, "JSON:json_content"
+| fieldsAdd content = json_content
+| fieldsFlatten content, depth: 3
+```
+
+This processor rule will parse the JSON structured `content` field and flatten the object into new fields.  This will make accessing the details in the content field much easier.
+
+![Parse Content Processor](../img/configure-dynatrace_opp_parse_content.png)
+
+Add a new processor rule by clicking on `+ Processor`.  Configure the processor rule with the following:
+
+Name:
+```text
+Message to Content
+```
+
+Type:
+```text
+DQL
+```
+
+Matching condition:
+```text
+isNotNull(log.raw_level) and loglevel != "NONE" and isNotNull(message) and isNotNull(json_content)
+```
+
+DQL processor definition:
+```text
+fieldsRemove content
+| fieldsAdd content = message
+```
+
+This processor rule will replace the `content` field value with the `message` field value.  The JSON object in the content field is excessive and contains a ton of information that isn't relative to the field itself.  The same information already exists on the log, outside of the content field.
+
+![Message to Content Processor](../img/configure-dynatrace_opp_message_to_content.png)
+
+Add a new processor rule by clicking on `+ Processor`.  Configure the processor rule with the following:
+
+Name:
+```text
+Transaction Fields
+```
+
+Type:
+```text
+DQL
+```
+
+Matching condition:
+```text
+matchesValue(content,"Transaction complete.") and isNotNull(content.amount.units.low) and isNotNull(content.transactionId)
+```
+
+DQL processor definition:
+```text
+fieldsAdd payment.amount = content.amount.units.low
+| fieldsAdd payment.transactionid = content.transactionId
+| fieldsAdd payment.currencycode = content.amount.currencyCode
+| fieldsAdd payment.cardtype = content.cardType
+| fieldsAdd payment.lastfourdigits = content.lastFourDigits
+```
+
+This processor rule will simplify the field names for extracting business information.  When the service successfully processes a payment transaction, a log record is written with the payment information.  We want this information extracted for business observability use cases.
+
+![Transaction Fields Processor](../img/configure-dynatrace_opp_transaction_fields.png)
+
+Add a new processor rule by clicking on `+ Processor`.  Configure the processor rule with the following:
+
+Name:
+```text
+Cleanup Fields
+```
+
+Type:
+```text
+DQL
+```
+
+Matching condition:
+```text
+isNotNull(log.raw_level) and loglevel != "NONE" and isNotNull(message) and isNotNull(json_content) and isNotNull(content)
+```
+
+DQL processor definition:
+```text
+fieldsRemove "content.dt.*", "content.k8s.*", "content.time","content.level", "content.process.technology", "content.hostname", "content.pid"
+| fieldsRemove "content.request.creditCard.*"
+| fieldsRemove json_content
+```
+
+This processor rule will cleanup (remove) fields that are no longer needed.  Parsing the `content` field resulted in many unwanted fields prefixed with `content.*`.  Additionally, the payment request log records contain sensitive credit card data (spoofed of course).  This processor will remove those fields with sensitive data.  This is an example of masking or deleting sensitive data at ingest using OpenPipeline.
+
+![Cleanup Fields Processor](../img/configure-dynatrace_opp_cleanup_fields.png)
+
+#### Data Extraction
+
+Click on the `Data extraction` tab to create data extraction rules.
+
+Add a new processor rule by clicking on `+ Processor`.  Configure the processor rule with the following:
+
+Name:
+```text
+PaymentService Transaction
+```
+
+Type:
+```text
+Business Event
+```
+
+Matching condition:
+```text
+matchesValue(content,"Transaction complete.") and isNotNull(payment.amount) and isNotNull(payment.transactionid)
+```
+
+Event type:
+```text
+astroshop.paymentservice.transaction.complete
+```
+
+Event provider:
+```text
+astroshop
+```
+
+Field extraction:
+```text
+Extract all fields
+```
+
+This data extraction rule will generate a business event (bizevent) anytime the payment service successfully completes a payment transaction, as identified by the matching log message.  This new business event can then be used for business analytics and business observability use cases.
+
+![BizEvent Processor](../img/configure-dynatrace_opp_transaction_bizevent.png)
+
+Add a new processor rule by clicking on `+ Processor`.  Configure the processor rule with the following:
+
+Name:
+```text
+PaymentService Fail Feature Flag Enabled
+```
+
+Type:
+```text
+Davis Event
+```
+
+Matching condition:
+```text
+matchesValue(status,"WARN") and matchesValue(message,"PaymentService Fail Feature Flag Enabled") and isNotNull(dt.entity.cloud_application)
+```
+
+Event name:
+```text
+PaymentService Fail Feature Flag Enabled
+```
+
+Event description:
+```text
+Generate an error when calling the charge method.
+```
+
+Event properties:
+
+| Field                          | Value                                              |
+|--------------------------------|----------------------------------------------------|
+| event.type                     | ERROR_EVENT                                        |
+| event.name                     | PaymentService Fail Feature Flag Enabled           |
+| event.description              | Generate an error when calling the charge method.  |
+| dt.davis.is_rootcause_relevant | true                                               |
+| dt.davis.is_merging_allowed    | true                                               |
+| dt.source_entity               | {dt.entity.cloud_application}                      |
+
+This data extraction rule will generate a Davis event (alert) anytime the payment service fails to process a payment transaction due to the problem pattern (feature flag) being enabled.  This is an example of using OpenPipeline to alert on log data at ingest.
+
+![Davis Event Processor](../img/configure-dynatrace_opp_fail_davis_event.png)
+
+#### Metric Extraction
+
+Click on the `Metric extraction` tab to create metric extraction rules.
+
+Add a new processor rule by clicking on `+ Processor`.  Configure the processor rule with the following:
+
+Name:
+```text
+PaymentService Failure
+```
+
+Type:
+```text
+Counter metric
+```
+
+Matching condition:
+```text
+matchesValue(status,"WARN") and matchesValue(message,"PaymentService Fail Feature Flag Enabled") and isNotNull(dt.entity.cloud_application)
+```
+
+Metric key:
+```text
+astroshop.paymentservice.failure
+```
+*log.astroshop.paymentservice.failure*
+
+Dimensions:
+
+| Pre-defined fields          |
+|-----------------------------|
+| dt.entity.cloud_application |
+| dt.entity.process_group     |
+| k8s.namespace.name          |
+| k8s.workload.name           |          
+
+This metric extraction rule will create a counter metric to count the number of payment service failures caused by the feature flag being enabled.  Using DQL, one could count the number of log messages, summarize or make a timeseries of that data on the fly.  However, in order to optimize query costs and reduce raw log query volume, converting specific log data to metrics is a best practice for a use case such as this.
+
+![Metric Processor](../img/configure-dynatrace_opp_transaction_metric.png)
+
+!!! tip "Permission and Storage Processors"
+    OpenPipeline can also be used to set the security context of the log data to manage permissions to specific logs.  Additionally, you can use storage processor rules to store specific log data in a bucket that is configured for a desired retention time.  For this lab, we will not create permission or storage processor rules.
+
+Click on `Save` to finish and save your new pipeline.
+
+#### Dynamic Route
+
+A pipeline will not have any effect unless logs are configured to be routed to the pipeline. With dynamic routing, data is routed based on a matching condition. The matching condition is a DQL query that defines the data set you want to route.
+
+Click on `Dynamic Routing` to configure a route to the target pipeline. Click on `+ Dynamic Route` to add a new route.
+
+![Dynamic Routes](../img/configure-dynatrace_opp_logs_routes.png)
+
+Configure the `Dynamic Route` to use the `AstroShop PaymentService` pipeline.
+
+Name:
+```text
+AstroShop PaymentService
+```
+
+Matching condition:
+```text
+matchesValue(k8s.namespace.name,"astroshop") and matchesValue(k8s.container.name,"paymentservice") and matchesValue(status,"NONE")
+```
+
+Pipeline:
+```text
+AstroShop PaymentService
+```
+
+Click `Save` to add your new route.
+
+![Add Route](../img/configure-dynatrace_opp_add_route.png)
+
+Validate that the route is enabled in the `Status` column. Click on `Save` to save the dynamic route table configuration.
+
+![Save Routes](../img/configure-dynatrace_opp_save_routes.png)
+
+Allow the `paymentservice` from `astroshop` to generate new log data that will be routed through the new pipeline (3-5 minutes).
 
 ## Continue
 

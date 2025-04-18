@@ -10,10 +10,10 @@ source /workspaces/$RepositoryName/.devcontainer/util/functions.sh
 # we want to monitor all interactions of the users in the live github pages.
 exposeMkdocs
 
-# Wait for todo to be available
-#waitForAllPods astroshop
+# Wait for astroshop to be available
+waitForAllPods astroshop
 
 #TODO: Expose the App you deployed in here 
-#_exposeAstroshop
+exposeAstroshop
 
 printInfoSection "Your dev.container finished starting."

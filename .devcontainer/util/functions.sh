@@ -506,7 +506,7 @@ exposeApp(){
 }
 
 
-_exposeAstroshop(){
+exposeAstroshop(){
   printInfo "Exposing Astroshop in your dev.container"
   nohup kubectl port-forward service/astroshop-frontendproxy 8080:8080  -n astroshop --address="0.0.0.0" > /tmp/kubectl-port-forward.log 2>&1 &
 }
@@ -539,7 +539,7 @@ _buildLabGuide(){
   cd -
 }
 
-_deployAstroshop(){
+deployAstroshop(){
   printInfoSection "Deploying Astroshop"
 
   # read the credentials and variables
