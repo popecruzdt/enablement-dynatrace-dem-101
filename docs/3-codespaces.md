@@ -1,8 +1,10 @@
 --8<-- "snippets/send-bizevent/3-codespaces.js"
 
+## Create Codespace
+
+Click to open Codespaces for this lab repository:
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/dynatrace-wwse/enablement-dynatrace-log-ingest-101){target="_blank"}
 
-## Create Codespace
 !!! tip "Codespace Configuration"
     - Branch
         - select the **main** branch
@@ -15,8 +17,6 @@
 We know your time is very valuable. This codespace takes around 7-10 minutes to be fully operational. A local Kubernetes ([kind](https://kind.sigs.k8s.io/){target="_blank"}) cluster monitored by Dynatrace will be configured and in it a sample application, AstroShop, will be deployed. To make your experience best, we are also installing and configuring tools like:
 
 **k9s kubectl helm node jq python3 gh**
-
-![Codespaces installing](img/codespaces_installing.png)
 
 ## Explore Codespace
 
