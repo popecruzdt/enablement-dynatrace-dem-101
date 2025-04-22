@@ -24,5 +24,5 @@ Lab tasks:
 
 Ready to learn the fundamentals of Dynatrace log ingest?
 
-## [View the Lab Guide](https://dynatrace-wwse.github.io/enablement-codespaces-template)
+## [View the Lab Guide](https://dynatrace-wwse.github.io/enablement-dynatrace-log-ingest-101)
 

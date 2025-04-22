@@ -3,7 +3,7 @@
 --8<-- "snippets/disclaimer.md"
 
 !!! warning "Under Construction"
-  This lab and lab guide are currently a work-in-progress and are not ready at this time!
+    This lab and lab guide are currently a work-in-progress and are not ready at this time!
 
 ## Lab Overview
 
