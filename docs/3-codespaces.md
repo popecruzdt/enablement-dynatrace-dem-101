@@ -3,6 +3,7 @@
 ## Create Codespace
 
 Click to open Codespaces for this lab repository:
+
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/dynatrace-wwse/enablement-dynatrace-log-ingest-101){target="_blank"}
 
 !!! tip "Codespace Configuration"
@@ -12,6 +13,8 @@ Click to open Codespaces for this lab repository:
         - select **Enablement on codespaces template**
     - Machine type
         - select **4-core**
+    - Region
+        - select any region, preferably one closest to your Dynatrace tenant
 
 ### Wait for Codespace
 We know your time is very valuable. This codespace takes around 7-10 minutes to be fully operational. A local Kubernetes ([kind](https://kind.sigs.k8s.io/){target="_blank"}) cluster monitored by Dynatrace will be configured and in it a sample application, AstroShop, will be deployed. To make your experience best, we are also installing and configuring tools like:
@@ -26,12 +29,13 @@ Your Codespace has now deployed the following resources:
   that will be used later in the demo.
 
 - After a couple of minutes, you'll see this screen in your codespaces terminal. It contains the links to the local expose labguide and the UI of the application which we will be doing our Hands-On training.
-![Codespaces finish](img/codespaces_finish.png)
 
+Sample output:
+![Codespaces finish](img/codespaces_finish.png)
 
 ## Tips & Tricks
 
-We want to boost your learning and try to make your DEV experience as smooth as possible with Dynatrace trainings. Your Codespaces have a couple of convenience features added. 
+We want to boost your learning and try to make your experience as smooth as possible with Dynatrace trainings. Your Codespaces have a couple of convenience features added. 
 
 ### Show the greeting
 In the terminal, there are functions loaded for your convenience. By creating a new Terminal the Greeting will be shown that includes the links to the exposed apps, the Github  pages, the Github Repository, the Dynatrace Tenant that is bound to this devcontainer and some of the tools installed.
