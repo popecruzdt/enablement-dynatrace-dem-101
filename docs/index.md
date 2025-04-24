@@ -46,7 +46,7 @@ Lab tasks:
 - [Kubernetes Kind](https://kind.sigs.k8s.io/)
     - tested on Kind tag 0.27.0
 - [Cert Manager](https://cert-manager.io/) - *prerequisite for OpenTelemetry Operator
-    - tested on cert-manager v1.14.4
+    - tested on cert-manager v1.15.3
 - [Dynatrace Operator](https://github.com/Dynatrace/dynatrace-operator)
     - tested on v1.4.2 (April 2025)
 - Dynatrace OneAgent

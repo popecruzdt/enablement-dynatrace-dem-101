@@ -394,6 +394,33 @@ Add a new processor rule by clicking on `+ Processor`.  Configure the processor 
 
 Name:
 ```text
+Mask Sensitive Data
+```
+
+Type:
+```text
+DQL
+```
+
+Matching condition:
+```text
+isNotNull(content.request.creditCard.creditCardNumber)
+```
+
+DQL processor definition:
+```text
+fieldsAdd maskedcreditcardnumber = hashMd5(content.request.creditCard.creditCardNumber)
+| fieldsRemove content.request.creditCard.creditCardNumber
+```
+
+This processor rule will create a new field containing the MD5 hash value of the credit card number.  This is an example of masking sensitive data at ingest using OpenPipeline.
+
+![Mask Sensitive Data Processor](../img/configure-dynatrace_opp_mask_sensitive.png)
+
+Add a new processor rule by clicking on `+ Processor`.  Configure the processor rule with the following:
+
+Name:
+```text
 Cleanup Fields
 ```
 
