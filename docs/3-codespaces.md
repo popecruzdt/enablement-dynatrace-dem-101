@@ -47,7 +47,7 @@ The client `kubectl` and `k9s`are configured so you can navigate in your local K
 ![k9s](img/k9s.png)
 
 ### Exposing the apps to the public
-The apps MKdocs and AstroShop app are being exposed in the devcontainer to your localhost. If you want to make the endpoints public accesible, just go to the ports section in VsCode, right click on them and change the visibility to public.
+The AstroShop app is being exposed in the devcontainer to your localhost. If you want to make the endpoints publicly accesible, just go to the ports section, right click on them and change the visibility to public.
 
 ## Troubleshooting
 
@@ -79,5 +79,5 @@ deployCronJobs
 In the next section, we'll deploy Dynatrace on our Kubernetes cluster to start collecting logs (and more!).
 
 <div class="grid cards" markdown>
-- [Continue to deploy Dynatrace:octicons-arrow-right-24:](4-deploy-dynatrace.md)
+- [Continue to Deploy Dynatrace:octicons-arrow-right-24:](4-deploy-dynatrace.md)
 </div>

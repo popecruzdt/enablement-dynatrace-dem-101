@@ -18,7 +18,7 @@ Locate the flag **paymentServiceFailure**.  Click the drop down box and change i
 Modern applications run in distributed environments. They generate observability data like metrics, logs and traces. Having all data in one place is often not enough because manual correlation can be required. Understanding the behavior and performance of distributed applications is important for effective troubleshooting. Dynatrace automatically connects and puts data in context for a smooth troubleshooting and analytics experience. This automated approach not only streamlines troubleshooting but also enhances the overall analytics experience, enabling teams to optimize application performance with ease.
 
 <div class="grid cards" markdown>
-- [Learn More:octicons-arrow-right-24:](https://docs.dynatrace.com/docs/analyze-explore-automate/logs/lma-use-cases/lma-e2e-troubleshooting)
+- [Learn More:octicons-arrow-right-24:](https://docs.dynatrace.com/docs/analyze-explore-automate/logs/lma-use-cases/lma-e2e-troubleshooting){target=_blank}
 </div>
 
 Shortly after enabling the feature flag for `paymentServiceFailure`, the Payment Service should start to fail every single payment transaction.  Let's observe, using logs in context, the impact on application reliability of this change.
@@ -36,7 +36,7 @@ Relevant logs are queried based on the impacted entity using a pre-built DQL que
 ![Problem Logs](../img/analyze-logs_active_problem_query_logs.png)
 
 !!! tip "Davis Co-Pilot Problem Explanation"
-    [Davis CoPilot provides clear summaries of problems](https://www.dynatrace.com/news/blog/davis-copilot-expands-get-answers-and-insights-across-the-dynatrace-platform/), their root causes, and the suggested remediation steps. Davis CoPilot explains individual issues in clear language from the problem details page and can perform a comparative analysis when multiple problems are selected from the list view. This helps you identify common root causes and propose corrective steps without relying on a team of experts and waiting for hours for critical insights.
+    [Davis CoPilot provides clear summaries of problems](https://www.dynatrace.com/news/blog/davis-copilot-expands-get-answers-and-insights-across-the-dynatrace-platform/){target=_blank}, their root causes, and the suggested remediation steps. Davis CoPilot explains individual issues in clear language from the problem details page and can perform a comparative analysis when multiple problems are selected from the list view. This helps you identify common root causes and propose corrective steps without relying on a team of experts and waiting for hours for critical insights.
 
 If your Dynatrace tenant has Davis Co-Pilot capabilities enabled (optional, not part of this lab) then you should see a button that says `Explain`.  Click it to open a prompt that will automatically ask Davis Co-Pilot to explain the problem in natural language and suggest remediation steps! 
 
@@ -69,7 +69,7 @@ Relevant logs are queried based on the impacted Kubernetes entity using a pre-bu
 ![Relevant Logs](../img/analyze-logs_kubernetes_explorer_query_logs.png)
 
 !!! tip "Connecting log data to traces"
-    [Dynatrace can enrich your ingested log data](https://docs.dynatrace.com/docs/analyze-explore-automate/logs/lma-log-enrichment) with additional information that helps Dynatrace to recognize, correlate, and evaluate the data.  Log enrichment enables you to seamlessly switch context and analyze individual spans, transactions, or entire workloads + empower development teams by making it easier and faster for them to detect and pinpoint problems.
+    [Dynatrace can enrich your ingested log data](https://docs.dynatrace.com/docs/analyze-explore-automate/logs/lma-log-enrichment){target=_blank} with additional information that helps Dynatrace to recognize, correlate, and evaluate the data.  Log enrichment enables you to seamlessly switch context and analyze individual spans, transactions, or entire workloads + empower development teams by making it easier and faster for them to detect and pinpoint problems.
 
 From here, we can view the correlated distributed trace for the transaction that wrote this log record.  In the log record, specifically one of the log records where `content = PaymentService Fail Feature Flag Enabled`, locate the `trace_id` field.  Click on it and choose `Open field with`.  From there, choose the `Distributed Tracing` app to view the trace.
 

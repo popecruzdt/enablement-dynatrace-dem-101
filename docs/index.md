@@ -9,7 +9,7 @@
 
 During this hands-on training lab, we’ll learn how to capture logs from Kubernetes using the Dynatrace Operator to deploy the Dynatrace Log Module.  We'll then configure log monitoring in Dynatrace to maximize the value that we get from logs.  Finally, we'll analyze the logs in context using the various apps native to the Dynatrace platform.
 
-Lab tasks:
+**Lab tasks:**
 
 1. Launch GitHub codespaces container with lab setup
 
@@ -46,7 +46,7 @@ Lab tasks:
 - [Kubernetes Kind](https://kind.sigs.k8s.io/)
     - tested on Kind tag 0.27.0
 - [Cert Manager](https://cert-manager.io/) - *prerequisite for OpenTelemetry Operator
-    - tested on cert-manager v1.14.4
+    - tested on cert-manager v1.15.3
 - [Dynatrace Operator](https://github.com/Dynatrace/dynatrace-operator)
     - tested on v1.4.2 (April 2025)
 - Dynatrace OneAgent

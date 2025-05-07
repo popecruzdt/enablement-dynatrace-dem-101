@@ -65,12 +65,12 @@ However, for this use case, configuring this rule alone will not start capturing
 ### Log Module Feature Flag
 
 !!! tip "Log Autodiscovery"
-    Logs will automatically be discovered by Dynatrace (OneAgent & Log Module).  However, not all logs may be discovered by default.  A log file must meet all of the [autodiscovery requirements](https://docs.dynatrace.com/docs/analyze-explore-automate/logs/lma-log-ingestion/lma-log-ingestion-via-oa/lma-autodiscovery#autodiscoveryrequirements) to be autodiscovered!
+    Logs will automatically be discovered by Dynatrace (OneAgent & Log Module).  However, not all logs may be discovered by default.  A log file must meet all of the [autodiscovery requirements](https://docs.dynatrace.com/docs/analyze-explore-automate/logs/lma-log-ingestion/lma-log-ingestion-via-oa/lma-autodiscovery#autodiscoveryrequirements){target=_blank} to be autodiscovered!
 
 An enhancement to the log module for Kubernetes introduces a feature that enables Dynatrace to capture all container logs, even those that do not meet the autodiscovery requirements.  The logs from the CronJobs are written by a container echoing a message to stdout.  This prevents them from meeting the autodiscovery requirements, thus we will need to enable the feature flag to collect all container logs.
 
 <div class="grid cards" markdown>
-- [Learn More:octicons-arrow-right-24:](https://docs.dynatrace.com/docs/analyze-explore-automate/logs/lma-log-ingestion/lma-log-ingestion-via-oa/lma-feature-flags)
+- [Learn More:octicons-arrow-right-24:](https://docs.dynatrace.com/docs/analyze-explore-automate/logs/lma-log-ingestion/lma-log-ingestion-via-oa/lma-feature-flags){target=_blank}
 </div>
 
 In your Dynatrace tenant, return to the Kubernetes settings for your cluster where you configured the log ingest rule.  In the Log Monitoring section, click on `Log module feature flags`.  Enable the setting `Collect all container logs`.  Click on `Save changes`.
@@ -96,7 +96,7 @@ Specific log messages may include user names, email addresses, URL parameters, a
 Masking is performed directly on OneAgent, ensuring that sensitive data are never ingested into the system.
 
 <div class="grid cards" markdown>
-- [Learn More:octicons-arrow-right-24:](https://docs.dynatrace.com/docs/analyze-explore-automate/logs/lma-log-ingestion/lma-log-ingestion-via-oa/lma-sensitive-data-masking)
+- [Learn More:octicons-arrow-right-24:](https://docs.dynatrace.com/docs/analyze-explore-automate/logs/lma-log-ingestion/lma-log-ingestion-via-oa/lma-sensitive-data-masking){target=_blank}
 </div>
 
 Within our CronJob logs, the `log-message-cronjob` writes out a message containing an email address.  While this email address isn't real, we can use it as an example of sensitive data masking.
@@ -164,7 +164,7 @@ By default, log monitoring automatically detects only the most common and unambi
 In the event that a multi-line log record contains another supported timestamp, it is likely that Dynatrace will treat that line as a new log record.  If this is not the desired result, a timestamp configuration rule can be created to change this behavior.
 
 <div class="grid cards" markdown>
-- [Learn More:octicons-arrow-right-24:](https://docs.dynatrace.com/docs/analyze-explore-automate/logs/lma-log-ingestion/lma-log-ingestion-via-oa/lma-timestamp-configuration)
+- [Learn More:octicons-arrow-right-24:](https://docs.dynatrace.com/docs/analyze-explore-automate/logs/lma-log-ingestion/lma-log-ingestion-via-oa/lma-timestamp-configuration){target=_blank}
 </div>
 
 In our CronJob logs, the `timestamp-cronjob` writes a multi-line log record that contains multiple timestamps.  Dynatrace treats the extra timestamps as new log lines.  We want this log record to be treated as a single record.
@@ -259,7 +259,7 @@ Dynatrace OpenPipeline can reshape incoming data for better understanding, proce
 ![OpenPipeline](../img/configure-dynatrace_openpipeline_architecture.png)
 
 <div class="grid cards" markdown>
-- [Learn More:octicons-arrow-right-24:](https://docs.dynatrace.com/docs/discover-dynatrace/platform/openpipeline)
+- [Learn More:octicons-arrow-right-24:](https://docs.dynatrace.com/docs/discover-dynatrace/platform/openpipeline){target=_blank}
 </div>
 
 The logs written by the `paymentservice` within the `astroshop` application are missing some important context information, making them a great candidate for ingest processing with OpenPipeline.
@@ -389,6 +389,33 @@ fieldsAdd payment.amount = content.amount.units.low
 This processor rule will simplify the field names for extracting business information.  When the service successfully processes a payment transaction, a log record is written with the payment information.  We want this information extracted for business observability use cases.
 
 ![Transaction Fields Processor](../img/configure-dynatrace_opp_transaction_fields.png)
+
+Add a new processor rule by clicking on `+ Processor`.  Configure the processor rule with the following:
+
+Name:
+```text
+Mask Sensitive Data
+```
+
+Type:
+```text
+DQL
+```
+
+Matching condition:
+```text
+isNotNull(content.request.creditCard.creditCardNumber)
+```
+
+DQL processor definition:
+```text
+fieldsAdd maskedcreditcardnumber = hashMd5(content.request.creditCard.creditCardNumber)
+| fieldsRemove content.request.creditCard.creditCardNumber
+```
+
+This processor rule will create a new field containing the MD5 hash value of the credit card number.  This is an example of masking sensitive data at ingest using OpenPipeline.
+
+![Mask Sensitive Data Processor](../img/configure-dynatrace_opp_mask_sensitive.png)
 
 Add a new processor rule by clicking on `+ Processor`.  Configure the processor rule with the following:
 

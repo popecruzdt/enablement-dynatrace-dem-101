@@ -508,7 +508,15 @@ exposeApp(){
 
 exposeAstroshop(){
   printInfo "Exposing Astroshop in your dev.container"
-  nohup kubectl port-forward service/astroshop-frontendproxy 8080:8080  -n astroshop --address="0.0.0.0" > /tmp/kubectl-port-forward.log 2>&1 &
+  # nohup kubectl port-forward service/astroshop-frontendproxy 8080:8080  -n astroshop --address="0.0.0.0" > /tmp/kubectl-port-forward.log 2>&1 &
+
+  # Expose AstroShop frontend with a NodePort Service
+  kubectl -n astroshop expose deployment astroshop-frontendproxy --type=NodePort --port=8080 --name astroshop-frontendproxy-np
+
+  # Define the NodePort to expose the app from the Cluster
+  kubectl patch service astroshop-frontendproxy-np --namespace=astroshop --type='json' --patch='[{"op": "replace", "path": "/spec/ports/0/nodePort", "value":30100}]'
+
+  printInfoSection "AstroShop app is now available via NodePort 30100"
 }
 
 

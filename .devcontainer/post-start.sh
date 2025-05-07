@@ -13,7 +13,7 @@ exposeMkdocs
 # Wait for astroshop to be available
 waitForAllPods astroshop
 
-#TODO: Expose the App you deployed in here 
+#Expose the App you deployed in here 
 exposeAstroshop
 
 printInfoSection "Your dev.container finished starting."

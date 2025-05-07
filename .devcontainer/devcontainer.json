@@ -25,15 +25,15 @@
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	"forwardPorts": [
-		8080
+		30100
 	],
 	// add labels
 	"portsAttributes": {
-		"8080": { "label": "Application Web UI" }
+		"30100": { "label": "Application Web UI" }
 	},
 
 	"hostRequirements": {
-		"cpus": 2
+		"cpus": 4
 	},
 
 	// Use 'postCreateCommand' to run commands after the container is created.
@@ -41,7 +41,7 @@
 	"postCreateCommand": "./.devcontainer/post-create.sh",
 
 	// Use 'postStartCommand' to run commands after the container starts.
-	"postStartCommand": "./.devcontainer/post-start.sh",
+	"postStartCommand": "./.devcontainer/post-start.sh"
 
 	// Add recommended secrets
 	// Commented out since we are not deploying Dynatrace in the template.
