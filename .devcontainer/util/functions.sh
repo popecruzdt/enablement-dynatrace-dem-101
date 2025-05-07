@@ -506,20 +506,6 @@ exposeApp(){
 }
 
 
-exposeAstroshop(){
-  printInfo "Exposing Astroshop in your dev.container"
-  # nohup kubectl port-forward service/astroshop-frontendproxy 8080:8080  -n astroshop --address="0.0.0.0" > /tmp/kubectl-port-forward.log 2>&1 &
-
-  # Expose AstroShop frontend with a NodePort Service
-  kubectl -n astroshop expose deployment astroshop-frontendproxy --type=NodePort --port=8080 --name astroshop-frontendproxy-np
-
-  # Define the NodePort to expose the app from the Cluster
-  kubectl patch service astroshop-frontendproxy-np --namespace=astroshop --type='json' --patch='[{"op": "replace", "path": "/spec/ports/0/nodePort", "value":30100}]'
-
-  printInfoSection "AstroShop app is now available via NodePort 30100"
-}
-
-
 installMkdocs(){
   installRunme
   printInfo "Installing Mkdocs"
@@ -574,8 +560,15 @@ deployAstroshop(){
 
   helm upgrade --install astroshop -f $CODESPACE_VSCODE_FOLDER/.devcontainer/astroshop/helm/dt-otel-demo-helm-deployments/values.yaml --set default.image.repository=docker.io/shinojosa/astroshop --set default.image.tag=1.12.0 --set collector_tenant_endpoint=$DT_OTEL_ENDPOINT --set collector_tenant_token=$DT_INGEST_TOKEN -n astroshop $CODESPACE_VSCODE_FOLDER/.devcontainer/astroshop/helm/dt-otel-demo-helm
 
-  printInfo "Stopping all cronjobs from Demo Live since they are not needed with this scenario"
+  printInfo "Exposing Astroshop in your dev.container via NodePort 30100"
 
+  printInfo "Change astroshop-frontendproxy service from LoadBalancer to NodePort"
+  kubectl patch service astroshop-frontendproxy --namespace=astroshop --patch='{"spec": {"type": "NodePort"}}'
+
+  printInfo "Exposing the astroshop-frontendproxy in NodePort 30100"
+  kubectl patch service astroshop-frontendproxy --namespace=astroshop --type='json' --patch='[{"op": "replace", "path": "/spec/ports/0/nodePort", "value":30100}]'
+
+  printInfo "Stopping all cronjobs from Demo Live since they are not needed with this scenario"
   kubectl get cronjobs -n astroshop -o json | jq -r '.items[] | .metadata.name' | xargs -I {} kubectl patch cronjob {} -n astroshop --patch '{"spec": {"suspend": true}}'
 
   # Listing all cronjobs
@@ -605,5 +598,6 @@ deployGhdocs(){
 ### custom functions for this repo/lab
 
 deployCronJobs() {
+  printInfoSection "Deploying CronJobs for Astroshop for this lab"
   kubectl apply -f $CODESPACE_VSCODE_FOLDER/.devcontainer/manifests/cronjobs.yaml
 }

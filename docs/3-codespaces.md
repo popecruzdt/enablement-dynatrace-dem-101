@@ -53,16 +53,35 @@ The AstroShop app is being exposed in the devcontainer to your localhost. If you
 
 ### AstroShop
 
-If you encounter problems with the AstroShop app deployed in the `astroshop` namespace, recycle the pods and expose the app.
+If you encounter problems with the AstroShop app deployed in the `astroshop` namespace, you can easily recycle the pods.
 
 Recycle pods:
 ```sh
-kubectl delete pods -n astroshop --field-selector="status.phase=Running"
+kubectl delete pods --all -n astroshop
 ```
 
-Expose app:
+But before doing so, if you want to see what is happenning we recommend the following: 
+
+Verify all astroshop pods
 ```sh
-exposeAstroshop
+kubectl get pods -n astroshop
+```
+
+Check for events in the astroshop namespace
+```sh
+kubectl get events -n astroshop
+```
+
+Check for system and cluster events 
+```sh
+kubectl get events -n kube-system
+kubectl get events -n default
+```
+
+### App exposure
+The Astroshop application is exposed via NodePort and it's mapping port 8080 to Cluster port 30100. Yo can verify it by typing:
+```sh
+kubectl get svc astroshop-frontendproxy -n astroshop
 ```
 
 ### CronJobs
