@@ -1,9 +1,11 @@
 --8<-- "snippets/send-bizevent/2-getting-started.js"
 --8<-- "snippets/requirements.md"
 
-## Dynatrace Tenant Setup
+## Prerequisites
 
 You will need full administrator access to a Dynatrace SaaS tenant with a DPS license.
+
+* Enable OpenTelemetry OneAgent Features
 
 ### Enable OpenTelemetry OneAgent Features
 

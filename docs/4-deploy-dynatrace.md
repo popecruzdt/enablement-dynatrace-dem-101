@@ -6,21 +6,21 @@ Dynatrace provides integrated Log management and analytics for your Kubernetes e
 Dynatrace provides a flexible approach to Kubernetes observability where you can pick and choose the level of observability you need for your Kubernetes clusters. The Dynatrace Operator manages all the components needed to get the data into Dynatrace for you. This also applies to collecting logs from Kubernetes containers. Depending on the selected observability option, the Dynatrace Operator configures and manages the Log module to work in conjunction with or without a OneAgent on the node.
 
 <div class="grid cards" markdown>
-- [Learn More:octicons-arrow-right-24:](https://docs.dynatrace.com/docs/ingest-from/setup-on-k8s/deployment/k8s-log-monitoring)
+- [Learn More:octicons-arrow-right-24:](https://docs.dynatrace.com/docs/ingest-from/setup-on-k8s/deployment/k8s-log-monitoring){target="_blank"}
 </div>
 
 ## Kubernetes Platform Monitoring + Application Observability
 
 Kubernetes platform monitoring sets the foundation for understanding and troubleshooting your Kubernetes clusters. This setup does not include OneAgent or application-level monitoring by default, but it can be combined with other monitoring and injection approaches.
 
-!!! tip "[Kubernetes Platform Monitoring](https://docs.dynatrace.com/docs/ingest-from/setup-on-k8s/how-it-works/kubernetes-monitoring): Capabilities"
+!!! tip "[Kubernetes Platform Monitoring](https://docs.dynatrace.com/docs/ingest-from/setup-on-k8s/how-it-works/kubernetes-monitoring){target="_blank"}: Capabilities"
     - Provides insights into the health and utilization of your Kubernetes clusters, including object relationships (topology)
     - Uses the Kubernetes API and cAdvisor to get node- and container-level metrics and Kubernetes events
     - Enables out-of-the-box alerting and anomaly detection for workloads, Pods, nodes, and clusters
 
 Application observability focuses on monitoring application-level metrics by injecting code modules into application Pods. This mode offers multiple injection strategies (automatic, runtime, and build-time) to collect application-specific metrics. For infrastructure-level insights, combine it with Kubernetes platform monitoring.
 
-!!! tip "[Application Observability](https://docs.dynatrace.com/docs/ingest-from/setup-on-k8s/how-it-works/application-monitoring): Capabilities"
+!!! tip "[Application Observability](https://docs.dynatrace.com/docs/ingest-from/setup-on-k8s/how-it-works/application-monitoring){target="_blank"}: Capabilities"
     - Dynatrace injects code modules into Pods using the Kubernetes admission controller.
     - Get granular control over the instrumented Pods using namespaces and annotations.
     - Route Pod metrics to different Dynatrace environments within the same Kubernetes cluster.
@@ -159,7 +159,7 @@ templates:
 ```
 
 !!! warning "ImagePullBackOff Error"
-    In case you encounter an **ImagePullBackOff** error, check `public.ecr.aws` to make sure the container image with that tag exists.  If not, change the value to use an existing one.
+    In case you encounter an **ImagePullBackOff** error, check [public.ecr.aws](https://gallery.ecr.aws/dynatrace/dynatrace-logmodule){target=_blank} to make sure the container image with that tag exists.  If not, change the value to use an existing one.
     ![Container Registry](../img/deploy-dynatrace_log_module_container_registry.png)
 
 Enabling the option **Restrict Log monitoring to certain resources** option will add `spec.logMonitoring.ingestRuleMatchers` to the Dynakube definition.
@@ -177,10 +177,10 @@ logMonitoring:
 
 By enabling the Log Module in your `dynakube.yaml` definition, this will enable the Dynakube to add a Log Ingest rule scoped at the Cluster-level within the Dynatrace tenant.
 
-As of Dynatrace Operator version `1.4.2` and Dynatrace version `1.311`, the Log Ingest rule is added upon deployment and creation of the Kubernetes Cluster setting, but any further changes within the Dynakube's configuration will not update the setting.  Manage Log Ingest rules within the Dynatrace tenant.  If you seek to automate this process at the Kubernetes Cluster-level, consider deploying [Dynatrace Configuration As Code](https://docs.dynatrace.com/docs/deliver/configuration-as-code/monaco) to [manage the setting](https://docs.dynatrace.com/docs/deliver/configuration-as-code/monaco/reference/supported-configuration#settings).
+As of Dynatrace Operator version `1.4.2` and Dynatrace version `1.311`, the Log Ingest rule is added upon deployment and creation of the Kubernetes Cluster setting, but any further changes within the Dynakube's configuration will not update the setting.  Manage Log Ingest rules within the Dynatrace tenant.  If you seek to automate this process at the Kubernetes Cluster-level, consider deploying [Dynatrace Configuration As Code](https://docs.dynatrace.com/docs/deliver/configuration-as-code/monaco){target=_blank} to [manage the setting](https://docs.dynatrace.com/docs/deliver/configuration-as-code/monaco/reference/supported-configuration#settings){target=_blank}.
 
 <div class="grid cards" markdown>
-- [Learn More:octicons-arrow-right-24:](https://docs.dynatrace.com/docs/analyze-explore-automate/logs/lma-log-ingestion/lma-log-ingestion-via-oa/lma-logs-from-kubernetes)
+- [Learn More:octicons-arrow-right-24:](https://docs.dynatrace.com/docs/analyze-explore-automate/logs/lma-log-ingestion/lma-log-ingestion-via-oa/lma-logs-from-kubernetes){target=_blank}
 </div>
 
 ### Configure Log Ingest
