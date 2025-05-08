@@ -2,9 +2,6 @@
 
 --8<-- "snippets/disclaimer.md"
 
-!!! warning "Under Construction"
-    This lab and lab guide are currently a work-in-progress and are not ready at this time!
-
 ## Lab Overview
 
 During this hands-on training lab, we’ll learn how to capture logs from Kubernetes using the Dynatrace Operator to deploy the Dynatrace Log Module.  We'll then configure log monitoring in Dynatrace to maximize the value that we get from logs.  Finally, we'll analyze the logs in context using the various apps native to the Dynatrace platform.

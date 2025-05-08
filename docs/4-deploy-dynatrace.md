@@ -87,6 +87,21 @@ Locate the `dynakube.yaml` file that you downloaded from your tenant.  With the 
 
 ![Copy Dynakube](../img/deploy-dynatrace_copy_dynakube.gif)
 
+!!! tip "ActiveGate Container Resources"
+    Consider changing the ActiveGate's resources for better performance in this lab environment
+    ```yaml
+    kind: DynaKube
+    spec:
+      activeGate:
+        resources:
+          requests:
+            cpu: 100m
+            memory: 512Mi
+          limits:
+            cpu: 500m
+            memory: 768Mi
+    ```
+
 Deploy the Dynakube using `kubectl`.
 ```sh
 kubectl apply -f dynakube.yaml
