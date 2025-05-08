@@ -9,6 +9,8 @@ Flag values can be changed through the user interface provided at http://localho
 
 Navigate to the feature flag user interface by adding `/feature` to the end of your Codespaces instance URL.
 
+For example: `https://super-duper-capybara-4wvj9xx7wpjh76qr-30100.app.github.dev/feature`
+
 Locate the flag **paymentServiceFailure**.  Click the drop down box and change it from `off` to `on`.  Click `save` at the top of the page.  The feature flag should start working within a minute.
 
 ![Flagd Configurator](../img/analyze-logs_enable_feature_flag.png)
@@ -35,10 +37,10 @@ Relevant logs are queried based on the impacted entity using a pre-built DQL que
 
 ![Problem Logs](../img/analyze-logs_active_problem_query_logs.png)
 
-!!! tip "Davis Co-Pilot Problem Explanation"
+!!! tip "Davis CoPilot Problem Explanation"
     [Davis CoPilot provides clear summaries of problems](https://www.dynatrace.com/news/blog/davis-copilot-expands-get-answers-and-insights-across-the-dynatrace-platform/){target=_blank}, their root causes, and the suggested remediation steps. Davis CoPilot explains individual issues in clear language from the problem details page and can perform a comparative analysis when multiple problems are selected from the list view. This helps you identify common root causes and propose corrective steps without relying on a team of experts and waiting for hours for critical insights.
 
-If your Dynatrace tenant has Davis Co-Pilot capabilities enabled (optional, not part of this lab) then you should see a button that says `Explain`.  Click it to open a prompt that will automatically ask Davis Co-Pilot to explain the problem in natural language and suggest remediation steps! 
+If your Dynatrace tenant has Davis CoPilot capabilities enabled (optional, not part of this lab) then you should see a button that says `Explain`.  Click it to open a prompt that will automatically ask Davis CoPilot to explain the problem in natural language and suggest remediation steps! 
 
 ![Davis CoPilot](../img/analyze-logs_active_problem_davis_copilot.png)
 

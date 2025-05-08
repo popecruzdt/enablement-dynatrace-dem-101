@@ -17,7 +17,7 @@ Click to open Codespaces for this lab repository:
         - select any region, preferably one closest to your Dynatrace tenant
 
 ### Wait for Codespace
-We know your time is very valuable. This codespace takes around 7-10 minutes to be fully operational. A local Kubernetes ([kind](https://kind.sigs.k8s.io/){target="_blank"}) cluster monitored by Dynatrace will be configured and in it a sample application, AstroShop, will be deployed. To make your experience best, we are also installing and configuring tools like:
+We know your time is very valuable. This codespace takes around 7-10 minutes to be fully operational. A local Kubernetes ([kind](https://kind.sigs.k8s.io/){target="_blank"}) cluster will be configured and in it a sample application, AstroShop, will be deployed. To make your experience better, we are also installing and configuring tools like:
 
 **k9s kubectl helm node jq python3 gh**
 
@@ -25,10 +25,11 @@ We know your time is very valuable. This codespace takes around 7-10 minutes to 
 
 Your Codespace has now deployed the following resources:
 
-- A local Kubernetes ([kind](https://kind.sigs.k8s.io/){target="_blank"}) cluster monitored by Dynatrace, with some pre-deployed apps
-  that will be used later in the demo.
+- A local Kubernetes ([kind](https://kind.sigs.k8s.io/){target="_blank"}) cluster, with some pre-deployed apps that will be used later in the demo.
 
-- After a couple of minutes, you'll see this screen in your codespaces terminal. It contains the links to the local expose labguide and the UI of the application which we will be doing our Hands-On training.
+- CronJobs running in Kubernetes that generate some sample log data
+
+After a couple of minutes, you'll see this screen in your Codespaces terminal. It contains the links to the UI of the application which we will be using for our hands-on training.
 
 Sample output:
 ![Codespaces finish](img/codespaces_finish.png)
@@ -38,12 +39,12 @@ Sample output:
 We want to boost your learning and try to make your experience as smooth as possible with Dynatrace trainings. Your Codespaces have a couple of convenience features added. 
 
 ### Show the greeting
-In the terminal, there are functions loaded for your convenience. By creating a new Terminal the Greeting will be shown that includes the links to the exposed apps, the Github  pages, the Github Repository, the Dynatrace Tenant that is bound to this devcontainer and some of the tools installed.
+In the terminal, there are functions loaded for your convenience. By creating a new terminal the greeting will be shown that includes the links to the exposed apps, the Github  pages, the Github Repository, the Dynatrace Tenant that is bound to this devcontainer (if applicable) and some of the tools installed.
 
-You can create a new Terminal directly in VSCode, type `zsh` or call the function `printGreeting` and that will print the greeting with the most relevant information.
+You can create a new terminal directly in VSCode, type `zsh` or call the function `printGreeting` and that will print the greeting with the most relevant information.
 
 ### Navigating in your local Kubernetes
-The client `kubectl` and `k9s`are configured so you can navigate in your local Kubernetes like butter. 
+The client `kubectl` and `k9s` are configured so you can navigate in your local Kubernetes. 
 ![k9s](img/k9s.png)
 
 ### Exposing the apps to the public
@@ -60,7 +61,7 @@ Recycle pods:
 kubectl delete pods --all -n astroshop
 ```
 
-But before doing so, if you want to see what is happenning we recommend the following: 
+But before doing so, if you want to see what is happening we recommend the following: 
 
 Verify all astroshop pods
 ```sh
@@ -79,7 +80,9 @@ kubectl get events -n default
 ```
 
 ### App exposure
-The Astroshop application is exposed via NodePort and it's mapping port 8080 to Cluster port 30100. Yo can verify it by typing:
+The Astroshop application is exposed via NodePort and it's mapping port 8080 to Cluster port 30100.
+
+Verify service:
 ```sh
 kubectl get svc astroshop-frontendproxy -n astroshop
 ```

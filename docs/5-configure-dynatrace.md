@@ -105,6 +105,10 @@ Within our CronJob logs, the `log-message-cronjob` writes out a message containi
 $TIMESTAMP INFO Log message from cronjob.  email=example@dynatrace.io Ending job.
 ```
 
+!!! tip "Built-In Sensitive Data Masking"
+    Dynatrace includes built-in sensitive data masking rules for email address, credit cards, URL queries, IBAN, and API-Tokens at the Environment-level.  If these settings are enabled, that may have already caused the email address in the CronJob log to be masked.
+    ![Built In Masking](../img/configure-dynatrace_settings_log_sensitive_data_masking_builtin.png)
+
 ### Sensitive Data Masking Rule
 
 In your Dynatrace tenant, return to the Kubernetes settings for your cluster where you configured the log ingest rule.  In the Log Monitoring section, click on `Sensitive data masking`.  Click on `Add rule`.
@@ -138,10 +142,6 @@ cronjobs
 ![Sensitive Data Masking Rule](../img/configure-dynatrace_settings_log_sensitive_data_masking_rule.png)
 
 The advantage of using the SHA-256 masking type is that every unique value (email address) will produce a unique hash value.  This may enable you to see if the log contains the same email address or different email addresses.  However, you will obviously not be able to decrypt what that email address is, keeping it secure!
-
-!!! tip "Built-In Sensitive Data Masking"
-    Dynatrace includes built-in sensitive data masking rules for email address, credit cards, URL queries, IBAN, and API-Tokens at the Environment-level.  If these settings are enabled, that may have already caused the email address in the CronJob log to be masked.
-    ![Built In Masking](../img/configure-dynatrace_settings_log_sensitive_data_masking_builtin.png)
 
 ### Query CronJob Logs
 
@@ -550,9 +550,8 @@ matchesValue(status,"WARN") and matchesValue(message,"PaymentService Fail Featur
 
 Metric key:
 ```text
-astroshop.paymentservice.failure
+log.astroshop.paymentservice.failure
 ```
-*log.astroshop.paymentservice.failure*
 
 Dimensions:
 
