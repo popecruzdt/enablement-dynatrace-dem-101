@@ -588,7 +588,7 @@ AstroShop PaymentService
 
 Matching condition:
 ```text
-matchesValue(k8s.namespace.name,"astroshop") and matchesValue(k8s.container.name,"paymentservice") and matchesValue(status,"NONE")
+matchesValue(k8s.namespace.name,"astroshop") and matchesValue(k8s.container.name,"paymentservice")
 ```
 
 Pipeline:
