@@ -432,7 +432,7 @@ dynatraceDeployOperator() {
   if [ -n "${DT_TENANT}" ]; then
     # Deploy Operator
 
-    deployOperatorViaHelm
+    deployOperatorViaKubectl
     waitForAllPods dynatrace
 
     #FIXME: Add Ingress Nginx instrumentation and always expose in a port so all apps have RUM regardless of technology
@@ -465,6 +465,26 @@ generateDynakube(){
     
     # Create Dynakube for ApplicationMonitoring
     sed -e 's~MONITORINGMODE:~applicationMonitoring: {}:~' $CODESPACE_VSCODE_FOLDER/.devcontainer/yaml/gen/dynakube-skel.yaml > $CODESPACE_VSCODE_FOLDER/.devcontainer/yaml/gen/dynakube-applicationmonitoring.yaml
+
+}
+
+deployOperatorViaKubectl(){
+
+  saveReadCredentials
+  API="/api"
+  DT_API_URL=$DT_TENANT$API
+  
+  # Read the actual hostname in case changed during instalation
+  CLUSTERNAME=$(hostname)
+
+  kubectl create namespace dynatrace
+
+  kubectl apply -f https://github.com/Dynatrace/dynatrace-operator/releases/download/v1.5.1/kubernetes-csi.yaml
+
+  # Save Dynatrace Secret
+  kubectl -n dynatrace create secret generic dev-container --from-literal="apiToken=$DT_OPERATOR_TOKEN" --from-literal="dataIngestToken=$DT_INGEST_TOKEN"
+
+  generateDynakube
 
 }
 
