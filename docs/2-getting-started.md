@@ -13,7 +13,7 @@ The demo application in this lab, AstroShop, contains OpenTelemetry instrumentat
 
 Navigate to the `Settings Classic` app in the Dynatrace tenant.  Open `OneAgent Features` from the **Preferences** sub-menu.  Search for features that contain the word `OpenTelemetry`.  Enable all OneAgent features for OpenTelemetry.
 
-![OpenTelemetry OneAgent Features](../img/getting-started_dynatrace_oneagent_features_opentelemetry.png)
+![OpenTelemetry OneAgent Features](./img/getting-started_dynatrace_oneagent_features_opentelemetry.png)
 
 ## Continue
 

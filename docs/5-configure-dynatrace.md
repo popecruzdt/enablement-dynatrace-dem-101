@@ -14,23 +14,23 @@ Log ingest configuration is based on rules that use matchers to target process g
 
 Log ingest rules are ordered configurations processed from top to bottom. For higher configuration granularity, log ingest rules can be defined at four scopes: host, Kubernetes cluster, host group, and environment, with host scope rules having the highest priority.
 
-![Rule Processing Priority](../img/configure-dynatrace_settings_rule_processing_priority.png)
+![Rule Processing Priority](./img/configure-dynatrace_settings_rule_processing_priority.png)
 
 ### Log Ingest Rule
 
 In your Dynatrace tenant, open the (new) `Settings` app.  Select the `Collect and capture` submenu.  Click on the `Log monitoring` menu.  Click on `Log ingest rules` to open the setting in the `Settings Classic` app.
 
-![Log Monitoring Settings](../img/configure-dynatrace_settings_collect_and_capture.png)
+![Log Monitoring Settings](./img/configure-dynatrace_settings_collect_and_capture.png)
 
 Here you will find the log ingest rules set at the environment-level.  Rules configured here will be inherited by every host group, Kubernetes cluster, and host in the environment.  However, these settings can be overridden at the granular entity-level.
 
 Click on `Hierarchy and overrides`.  Locate your Kubernetes cluster override for `enablement-log-ingest-101` and click on it.
 
-![Log Monitoring Hierarchy and Overrides](../img/configure-dynatrace_settings_log_ingest_hierarchy.png)
+![Log Monitoring Hierarchy and Overrides](./img/configure-dynatrace_settings_log_ingest_hierarchy.png)
 
 Add a new rule that will capture logs from specific pods within the `cronjobs` namespace.  Click on `Add rule`.
 
-![Add Rule](../img/configure-dynatrace_settings_log_ingest_cluster_rules.png)
+![Add Rule](./img/configure-dynatrace_settings_log_ingest_cluster_rules.png)
 
 Configure the rule with the following details:
 
@@ -56,7 +56,7 @@ Kubernetes pod annotation is
 logs.dynatrace.io/ingest=true
 ```
 
-![Create Rule](../img/configure-dynatrace_settings_log_ingest_create_rule.png)
+![Create Rule](./img/configure-dynatrace_settings_log_ingest_create_rule.png)
 
 This rule will enable the Log Module to collect logs from pods that belong to the `cronjobs` namespace **AND** have the annotation `logs.dynatrace.io/ingest: true`.
 
@@ -75,7 +75,7 @@ An enhancement to the log module for Kubernetes introduces a feature that enable
 
 In your Dynatrace tenant, return to the Kubernetes settings for your cluster where you configured the log ingest rule.  In the Log Monitoring section, click on `Log module feature flags`.  Enable the setting `Collect all container logs`.  Click on `Save changes`.
 
-![Log Module Feature Flags](../img/configure-dynatrace_settings_log_module_feature_flags.png)
+![Log Module Feature Flags](./img/configure-dynatrace_settings_log_module_feature_flags.png)
 
 With this feature enabled and the log ingest rule configured, Dynatrace will now start to collect logs from the CronJob containers.
 
@@ -87,7 +87,7 @@ Validate that the logs are now being ingested into Dynatrace.  Open the `Logs` a
 k8s.namespace.name = cronjobs
 ```
 
-![CronJob Logs](../img/configure-dynatrace_logs_query_new_cronjob_logs.png)
+![CronJob Logs](./img/configure-dynatrace_logs_query_new_cronjob_logs.png)
 
 ## Configure Sensitive Data Masking
 
@@ -107,13 +107,13 @@ $TIMESTAMP INFO Log message from cronjob.  email=example@dynatrace.io Ending job
 
 !!! tip "Built-In Sensitive Data Masking"
     Dynatrace includes built-in sensitive data masking rules for email address, credit cards, URL queries, IBAN, and API-Tokens at the Environment-level.  If these settings are enabled, that may have already caused the email address in the CronJob log to be masked.
-    ![Built In Masking](../img/configure-dynatrace_settings_log_sensitive_data_masking_builtin.png)
+    ![Built In Masking](./img/configure-dynatrace_settings_log_sensitive_data_masking_builtin.png)
 
 ### Sensitive Data Masking Rule
 
 In your Dynatrace tenant, return to the Kubernetes settings for your cluster where you configured the log ingest rule.  In the Log Monitoring section, click on `Sensitive data masking`.  Click on `Add rule`.
 
-![Sensitive Data Masking Rules](../img/configure-dynatrace_settings_log_sensitive_data_masking.png)
+![Sensitive Data Masking Rules](./img/configure-dynatrace_settings_log_sensitive_data_masking.png)
 
 Configure the rule with the following details:
 
@@ -139,7 +139,7 @@ Kubernetes namespace name is
 cronjobs
 ```
 
-![Sensitive Data Masking Rule](../img/configure-dynatrace_settings_log_sensitive_data_masking_rule.png)
+![Sensitive Data Masking Rule](./img/configure-dynatrace_settings_log_sensitive_data_masking_rule.png)
 
 The advantage of using the SHA-256 masking type is that every unique value (email address) will produce a unique hash value.  This may enable you to see if the log contains the same email address or different email addresses.  However, you will obviously not be able to decrypt what that email address is, keeping it secure!
 
@@ -153,7 +153,7 @@ Return to the `Logs` app and filter on the logs that contain the email address.
 k8s.namespace.name = cronjobs k8s.deployment.name = log-message-cronjob-* content = "*email*"
 ```
 
-![Email Masked](../img/configure-dynatrace_logs_query_email_logs.png)
+![Email Masked](./img/configure-dynatrace_logs_query_email_logs.png)
 
 The logs now contain the hashed value of the email address, `03cb5558c834be3796387a17763f315f22d3ab87cd1dc6d5d4817f8d27ec5913`.
 
@@ -169,13 +169,13 @@ In the event that a multi-line log record contains another supported timestamp, 
 
 In our CronJob logs, the `timestamp-cronjob` writes a multi-line log record that contains multiple timestamps.  Dynatrace treats the extra timestamps as new log lines.  We want this log record to be treated as a single record.
 
-![Three Log Records](../img/configure-dynatrace_logs_query_3_timestamp_logs.png)
+![Three Log Records](./img/configure-dynatrace_logs_query_3_timestamp_logs.png)
 
 ### Timestamp Configuration Rule
 
 In your Dynatrace tenant, return to the Kubernetes settings for your cluster where you configured the log ingest rule.  In the Log Monitoring section, click on `Timestamp/Splitting patterns `.  Click on `Add rule`.
 
-![Timestamp Pattern Rules](../img/configure-dynatrace_settings_log_timestamp_patterns.png)
+![Timestamp Pattern Rules](./img/configure-dynatrace_settings_log_timestamp_patterns.png)
 
 Configure the rule with the following details:
 
@@ -196,7 +196,7 @@ Kubernetes namespace name is
 cronjobs
 ```
 
-![Timestamp Pattern Rule](../img/configure-dynatrace_settings_log_timestamp_patterns_rule.png)
+![Timestamp Pattern Rule](./img/configure-dynatrace_settings_log_timestamp_patterns_rule.png)
 
 Here is a breakdown of our pattern:
 
@@ -220,7 +220,7 @@ Return to the `Logs` app and filter on the logs that contain the multiple timest
 k8s.namespace.name = cronjobs content != "*injection-startup*" k8s.workload.name="timestamp-cronjob"
 ```
 
-![Single Log Record](../img/configure-dynatrace_logs_query_timestamp_logs.png)
+![Single Log Record](./img/configure-dynatrace_logs_query_timestamp_logs.png)
 
 Each log message is now treated as a single, multi-line, log record containing the entire message.
 
@@ -230,13 +230,13 @@ In some cases, you may want to collect container logs from the Dynatrace compone
 
 In your Dynatrace tenant, return to the Kubernetes settings for your cluster where you configured the log ingest rule.  In the Log Monitoring section, click on `Advanced log settings`.  Enable the setting `Allow OneAgent to monitor Dynatrace logs`.  Click on `Save changes`.
 
-![Allow Dynatrace Logs](../img/configure-dynatrace_settings_log_allow_dynatrace.png)
+![Allow Dynatrace Logs](./img/configure-dynatrace_settings_log_allow_dynatrace.png)
 
 This allows the Log Module to discover the Dynatrace component logs.  However, we need to add an ingest rule to ship them to Dynatrace.
 
 In the Log Monitoring section, click on `Log ingest rules`.  Modify your existing rule called `enablement-log-ingest-101` and add the `dynatrace` namespace to the matcher.  Save your changes.
 
-![Ingest Dynatrace Namespace Logs](../img/configure-dynatrace_settings_log_ingest_rule_add_dynatrace.png)
+![Ingest Dynatrace Namespace Logs](./img/configure-dynatrace_settings_log_ingest_rule_add_dynatrace.png)
 
 ### Query Logs
 
@@ -246,7 +246,7 @@ Return to the `Logs` app and filter on the logs from the `dynatrace` namespace.
 k8s.namespace.name = dynatrace
 ```
 
-![Dynatrace Logs](../img/configure-dynatrace_logs_query_dynatrace_logs.png)
+![Dynatrace Logs](./img/configure-dynatrace_logs_query_dynatrace_logs.png)
 
 These logs can help with troubleshooting any observability issues on the Kubernetes cluster.  However, it is the Log Module that is collecting these logs, so if the Log Module is not working - the logs won't be shipped to Dynatrace!
 
@@ -256,7 +256,7 @@ OpenPipeline is the Dynatrace data handling solution to seamlessly ingest and pr
 
 Dynatrace OpenPipeline can reshape incoming data for better understanding, processing, and analysis. OpenPipeline processing is based on rules that you create and offers a flexible way of extracting value from raw records.
 
-![OpenPipeline](../img/configure-dynatrace_openpipeline_architecture.png)
+![OpenPipeline](./img/configure-dynatrace_openpipeline_architecture.png)
 
 <div class="grid cards" markdown>
 - [Learn More:octicons-arrow-right-24:](https://docs.dynatrace.com/docs/discover-dynatrace/platform/openpipeline){target=_blank}
@@ -273,11 +273,11 @@ Sample log snippet:
 
 In your Dynatrace tenant, open the `OpenPipeline` app.  Select `Logs` and click on the `Pipelines` tab.  Add a new Pipeline by clicking on `+ Pipeline`.
 
-![OpenPipeline Logs Pipelines](../img/configure-dynatrace_opp_logs_pipelines.png)
+![OpenPipeline Logs Pipelines](./img/configure-dynatrace_opp_logs_pipelines.png)
 
 Give the new pipeline a name, `AstroShop PaymentService`.  Click on the `Processing` tab to create processing rules.
 
-![Name Your Pipeline](../img/configure-dynatrace_opp_name_pipeline.png)
+![Name Your Pipeline](./img/configure-dynatrace_opp_name_pipeline.png)
 
 !!! tip "Save Your Configuration"
     It is highly recommended to save your progress often by clicking the `Save` button and then re-opening your pipeline configuration to avoid losing your changes!
@@ -303,7 +303,7 @@ Pre-defined: matchesValue(process.technology, "Node.js") or matchesValue(process
 
 This processor rule will apply built-in pattern detection for known NodeJS technology log frameworks to parse and enrich the log content.  In our example, this will be important to extract the numeric `loglevel` into a recognizable string value; such as "INFO" or "WARN".
 
-![NodeJS Processor](../img/configure-dynatrace_opp_nodejs.png)
+![NodeJS Processor](./img/configure-dynatrace_opp_nodejs.png)
 
 Add a new processor rule by clicking on `+ Processor`.  Configure the processor rule with the following:
 
@@ -331,7 +331,7 @@ parse content, "JSON:json_content"
 
 This processor rule will parse the JSON structured `content` field and flatten the object into new fields.  This will make accessing the details in the content field much easier.
 
-![Parse Content Processor](../img/configure-dynatrace_opp_parse_content.png)
+![Parse Content Processor](./img/configure-dynatrace_opp_parse_content.png)
 
 Add a new processor rule by clicking on `+ Processor`.  Configure the processor rule with the following:
 
@@ -358,7 +358,7 @@ fieldsRemove content
 
 This processor rule will replace the `content` field value with the `message` field value.  The JSON object in the content field is excessive and contains a ton of information that isn't relative to the field itself.  The same information already exists on the log, outside of the content field.
 
-![Message to Content Processor](../img/configure-dynatrace_opp_message_to_content.png)
+![Message to Content Processor](./img/configure-dynatrace_opp_message_to_content.png)
 
 Add a new processor rule by clicking on `+ Processor`.  Configure the processor rule with the following:
 
@@ -388,7 +388,7 @@ fieldsAdd payment.amount = content.amount.units.low
 
 This processor rule will simplify the field names for extracting business information.  When the service successfully processes a payment transaction, a log record is written with the payment information.  We want this information extracted for business observability use cases.
 
-![Transaction Fields Processor](../img/configure-dynatrace_opp_transaction_fields.png)
+![Transaction Fields Processor](./img/configure-dynatrace_opp_transaction_fields.png)
 
 Add a new processor rule by clicking on `+ Processor`.  Configure the processor rule with the following:
 
@@ -415,7 +415,7 @@ fieldsAdd maskedcreditcardnumber = hashMd5(content.request.creditCard.creditCard
 
 This processor rule will create a new field containing the MD5 hash value of the credit card number.  This is an example of masking sensitive data at ingest using OpenPipeline.
 
-![Mask Sensitive Data Processor](../img/configure-dynatrace_opp_mask_sensitive.png)
+![Mask Sensitive Data Processor](./img/configure-dynatrace_opp_mask_sensitive.png)
 
 Add a new processor rule by clicking on `+ Processor`.  Configure the processor rule with the following:
 
@@ -443,7 +443,7 @@ fieldsRemove "content.dt.*", "content.k8s.*", "content.time","content.level", "c
 
 This processor rule will cleanup (remove) fields that are no longer needed.  Parsing the `content` field resulted in many unwanted fields prefixed with `content.*`.  Additionally, the payment request log records contain sensitive credit card data (spoofed of course).  This processor will remove those fields with sensitive data.  This is an example of masking or deleting sensitive data at ingest using OpenPipeline.
 
-![Cleanup Fields Processor](../img/configure-dynatrace_opp_cleanup_fields.png)
+![Cleanup Fields Processor](./img/configure-dynatrace_opp_cleanup_fields.png)
 
 #### Data Extraction
 
@@ -483,7 +483,7 @@ Extract all fields
 
 This data extraction rule will generate a business event (bizevent) anytime the payment service successfully completes a payment transaction, as identified by the matching log message.  This new business event can then be used for business analytics and business observability use cases.
 
-![BizEvent Processor](../img/configure-dynatrace_opp_transaction_bizevent.png)
+![BizEvent Processor](./img/configure-dynatrace_opp_transaction_bizevent.png)
 
 Add a new processor rule by clicking on `+ Processor`.  Configure the processor rule with the following:
 
@@ -525,7 +525,7 @@ Event properties:
 
 This data extraction rule will generate a Davis event (alert) anytime the payment service fails to process a payment transaction due to the problem pattern (feature flag) being enabled.  This is an example of using OpenPipeline to alert on log data at ingest.
 
-![Davis Event Processor](../img/configure-dynatrace_opp_fail_davis_event.png)
+![Davis Event Processor](./img/configure-dynatrace_opp_fail_davis_event.png)
 
 #### Metric Extraction
 
@@ -564,7 +564,7 @@ Dimensions:
 
 This metric extraction rule will create a counter metric to count the number of payment service failures caused by the feature flag being enabled.  Using DQL, one could count the number of log messages, summarize or make a timeseries of that data on the fly.  However, in order to optimize query costs and reduce raw log query volume, converting specific log data to metrics is a best practice for a use case such as this.
 
-![Metric Processor](../img/configure-dynatrace_opp_transaction_metric.png)
+![Metric Processor](./img/configure-dynatrace_opp_transaction_metric.png)
 
 !!! tip "Permission and Storage Processors"
     OpenPipeline can also be used to set the security context of the log data to manage permissions to specific logs.  Additionally, you can use storage processor rules to store specific log data in a bucket that is configured for a desired retention time.  For this lab, we will not create permission or storage processor rules.
@@ -577,7 +577,7 @@ A pipeline will not have any effect unless logs are configured to be routed to t
 
 Click on `Dynamic Routing` to configure a route to the target pipeline. Click on `+ Dynamic Route` to add a new route.
 
-![Dynamic Routes](../img/configure-dynatrace_opp_logs_routes.png)
+![Dynamic Routes](./img/configure-dynatrace_opp_logs_routes.png)
 
 Configure the `Dynamic Route` to use the `AstroShop PaymentService` pipeline.
 
@@ -598,11 +598,11 @@ AstroShop PaymentService
 
 Click `Save` to add your new route.
 
-![Add Route](../img/configure-dynatrace_opp_add_route.png)
+![Add Route](./img/configure-dynatrace_opp_add_route.png)
 
 Validate that the route is enabled in the `Status` column. Click on `Save` to save the dynamic route table configuration.
 
-![Save Routes](../img/configure-dynatrace_opp_save_routes.png)
+![Save Routes](./img/configure-dynatrace_opp_save_routes.png)
 
 Allow the `paymentservice` from `astroshop` to generate new log data that will be routed through the new pipeline (3-5 minutes).
 
@@ -614,7 +614,7 @@ Return to the `Logs` app and filter on the logs generated by the payment service
 k8s.namespace.name = "astroshop" k8s.container.name = "paymentservice" 
 ```
 
-![PaymentService Logs](../img/configure-dynatrace_opp_query_new_logs.png)
+![PaymentService Logs](./img/configure-dynatrace_opp_query_new_logs.png)
 
 ## Continue
 
