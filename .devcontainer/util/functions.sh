@@ -432,7 +432,7 @@ dynatraceDeployOperator() {
   if [ -n "${DT_TENANT}" ]; then
     # Deploy Operator
 
-    deployOperatorViaKubectl
+    deployOperatorViaHelm
     waitForAllPods dynatrace
 
     #FIXME: Add Ingress Nginx instrumentation and always expose in a port so all apps have RUM regardless of technology

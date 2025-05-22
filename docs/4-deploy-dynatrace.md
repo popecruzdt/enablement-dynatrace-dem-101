@@ -60,13 +60,6 @@ Generate a Data Ingest Token.  Copy and save the value somewhere, in case you ne
 
 Download the `dynakube.yaml` file.
 
-!!! bug " .prov error when installing DT Operator via HELM"
-    There is momentarely a bug when deploying the Operator via HELM in a Kind cluster. We are looking into it. For the time being please deploy the Dynatrace Operator via kubectl. Here the commands:
-    ```sh title="kubectl commands to deploy the Dynatrace Operator"
-    kubectl create namespace dynatrace
-    kubectl apply -f https://github.com/Dynatrace/dynatrace-operator/releases/download/v1.5.1/kubernetes-csi.yaml
-    ```
-
 Copy the `helm install dynatrace-operator` command to your clipboard.  Use the command from your Dynatrace tenant, but it should look similar to this:
 ```sh
 helm install dynatrace-operator oci://public.ecr.aws/dynatrace/dynatrace-operator \
