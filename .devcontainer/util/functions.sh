@@ -617,7 +617,13 @@ deployGhdocs(){
 
 ### custom functions for this repo/lab
 
-deployCronJobs() {
-  printInfoSection "Deploying CronJobs for Astroshop for this lab"
-  kubectl apply -f $CODESPACE_VSCODE_FOLDER/.devcontainer/manifests/cronjobs.yaml
+deployDynatraceOnK8s(){
+  # Dynatrace Credentials are read and saved as a configmap for ease of use
+  dynatraceEvalReadSaveCredentials
+
+  # Dynatrace Operator can be deployed automatically
+  dynatraceDeployOperator
+
+  # Deploy Dynakube with Application Monitoring mode
+  deployApplicationMonitoring
 }

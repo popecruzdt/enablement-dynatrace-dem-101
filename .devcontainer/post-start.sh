@@ -6,5 +6,4 @@
 #Load the functions into the shell
 source /workspaces/$RepositoryName/.devcontainer/util/functions.sh
 
-
 printInfoSection "Your dev.container finished starting."
