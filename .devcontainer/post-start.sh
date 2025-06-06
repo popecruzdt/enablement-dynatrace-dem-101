@@ -6,4 +6,7 @@
 #Load the functions into the shell
 source /workspaces/$RepositoryName/.devcontainer/util/functions.sh
 
+# Expose Mkdocs
+exposeMkdocs
+
 printInfoSection "Your dev.container finished starting."

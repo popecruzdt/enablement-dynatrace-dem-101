@@ -1,20 +1,103 @@
 # Real User Monitoring
 --8<-- "snippets/send-bizevent/5-real-user-monitoring.js"
 
-You can configure log ingestion rules in Dynatrace to control which logs should be collected from your Kubernetes environment. The rules leverage Kubernetes metadata and other common log entry attributes to determine which logs are to be ingested. The standard log processing features from OneAgent, including sensitive data masking, timestamp configuration, log boundary definition, and automatic enrichment of log records, are also available for Kubernetes logs.
+Dynatrace Real User Monitoring (RUM) gives you the power to know your customers by providing performance analysis in real time. This includes all user actions taken and how the various actions impact performance. You can also easily identify problems or errors that occurred as well as user experience ratings, geolocation breakdowns, and much more. You can also gain insight into the behavior of your users. This among others includes the number of customers who return to your site. With Dynatrace RUM, you have the context over time and immediate analysis to the complete picture of your end-user experience.
 
-!!! tip "Dynatrace Automatic Log Ingest"
-    Dynatrace automatically discovers and analyzes new log files, including Kubernetes pod logs.  The out-of-the-box configuration will discover, parse, and ingest the logs from our `astroshop` application.  In order to exercise some of the advanced log monitoring configurations, we'll ingest sample CronJobs with logs that will need further configuration.
+<div class="grid cards" markdown>
+- [Learn More:octicons-arrow-right-24:](https://docs.dynatrace.com/docs/shortlink/rum-overview){target=_blank}
+</div>
 
-## Ingest CronJob Logs
+## Web Application Detection
 
-Dynatrace log ingest configuration allows you to remotely configure installed OneAgents to either include specific log sources for forwarding to Dynatrace or exclude them from upload. While log discovery refers to the automatic detection of log files so that no additional log source configuration effort is required on your environment, log ingestion involves the process of collecting logs and sending required log sources into Dynatrace.
+After OneAgent in full-stack monitoring mode is installed on a host, it monitors all applications running on that host. As a starting point, all monitoring data is encapsulated in a placeholder application called `My web application`. We offer this placeholder application to allow for more flexibility — it's you who decides how to organize your applications.  In Real User Monitoring, monitored applications are logical constructs onto which customer applications—websites, mobile apps, and more are mapped for monitoring with regard to traffic from real users.
 
-Log ingest configuration is based on rules that use matchers to target process groups, content, log levels, log paths, and other attributes described in this document. These rules determine which log files are ingested among those automatically detected by OneAgent or defined as custom log sources. 
+### Suggested Approach
 
-Log ingest rules are ordered configurations processed from top to bottom. For higher configuration granularity, log ingest rules can be defined at four scopes: host, Kubernetes cluster, host group, and environment, with host scope rules having the highest priority.
+The `My web application` placeholder application aggregates the traffic from all detected domains. This application can serve as your starting point for mapping the identified domains to separate applications in your environment.
 
-![Rule Processing Priority](./img/configure-dynatrace_settings_rule_processing_priority.png)
+Create a new application by transferring the detected AstroShop domain within `My web application` to a new application.
+
+In your Dynatrace tenant, launch the `Frontend` app.  Locate the application `My web application` and click to view it.
+
+![Frontend App](./img/rum-app_detection_open_frontend_app.png)
+
+Scroll down to find the section **Top 3 Domains**
+
+![Top 3 Domains](./img/rum-app_detection_top_3_domains.png)
+
+Create new application.
+
+![Create New Application](./img/rum-app_detection_domain_create_new_app.png)
+
+Confirm creation.
+
+![Confirm New Application](./img/rum-app_detection_domain_create_new_app_confirm.png)
+
+View top 3 domains again.
+
+![Top 3 Domains with New App](./img/rum-app_detection_new_app_transfer.png)
+
+View new app.
+
+![View New App](./img/rum-app_detection_new_app_with_traffic.png)
+
+TODO: Summarize
+
+### Detection Rules Approach
+
+If you want to create more applications, change existing application mappings, or if you need to define more complex rules based not only on domains but also on URLs, you can use the Application detection settings page.
+
+The URLs used for application detection have the `scheme://host:port/path?query` structure, where the query string is optional and default ports 80 for HTTP and 443 for HTTPS are omitted. The URL does not include a possible fragment identifier as in `scheme://host:port/path?query#fragment`, since application detection rules are evaluated on the server side of the application and the fragment identifier is only used by the browser and not added to web requests.
+
+AstroShop traffic generated by load generator process accesses the application via the `astroshop-frontendproxy` domain.  When you access the application in your browser, the domain will be different.  Add the additional domain to the web application detection rules.
+
+Start by navigating to the **Ports** tab of your Codespaces instance.  Locate port **30100**.  Right click on `Visibility: Private`, click `Port Visibility`, and click `Public`.  This will expose the port publicly by allowing browsers without session data to access it.
+
+![Port Visibility](./img/rum-app_detection_codespaces_ports_public_visibility.png)
+
+Browse to the AstroShop application on port 30100 in a new incognito window.
+
+![Open AstroShop](./img/rum-app_detection_codespaces_ports_open_in_browser.png)
+
+Confirm going to the site
+
+![Continue](./img/rum-app_detection_codespaces_open_incognito.png)
+
+Validate you can access the app
+
+![AstroShop](./img/rum-app_detection_browse_complete_order.png)
+
+Copy the URL
+
+In your Dynatrace tenant, launch the `Settings` app.  
+
+![Settings Detection Rules](./img/rum-app_detection_settings_app_detection.png)
+
+View rules.  Create rule.
+
+![Rules](./img/rum-app_detection_settings_detection_rules.png)
+
+New Rule
+
+![Rule List](./img/rum-app_detection_settings_new_detection_rule.png)
+
+![Place Orders](./img/rum-app_detection_browse_complete_order.png)
+
+View app
+
+![AstroShop Detection Rules](./img/rum-app_detection_astroshop_detection_rules.png)
+
+Detected domains
+
+![AstroShop Detected Domains](./img/rum-app_detection_astroshop_detected_domains.png)
+
+TODO: summary
+
+## Configure Web Application
+
+### Application Name
+
+### User Tag
 
 ### Log Ingest Rule
 
