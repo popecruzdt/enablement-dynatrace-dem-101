@@ -624,6 +624,6 @@ deployDynatraceOnK8s(){
   # Dynatrace Operator can be deployed automatically
   dynatraceDeployOperator
 
-  # Deploy Dynakube with Application Monitoring mode
-  deployApplicationMonitoring
+  # Deploy Dynakube with Cloud Native Full Stack mode
+  deployCloudNative
 }

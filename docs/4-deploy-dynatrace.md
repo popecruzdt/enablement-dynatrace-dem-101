@@ -54,8 +54,6 @@ With your environment variables set, invoke the deployment automation script wit
 deployDynatraceOnK8s
 ```
 
-
-
 ### Refresh Application Pods
 
 Now that Dynatrace is deployed, let's refresh/recycle the application pods for `astroshop` to inject the OneAgent code modules.

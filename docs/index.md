@@ -2,39 +2,27 @@
 
 --8<-- "snippets/disclaimer.md"
 
+<!-- TODO: Before go-live, remove this warning -->
+!!! warning "Under Construction"
+    This lab and lab guide are currently a work-in-progress and are not ready at this time!
+
 ## Lab Overview
 
-During this hands-on training lab, we’ll learn how to capture logs from Kubernetes using the Dynatrace Operator to deploy the Dynatrace Log Module.  We'll then configure log monitoring in Dynatrace to maximize the value that we get from logs.  Finally, we'll analyze the logs in context using the various apps native to the Dynatrace platform.
+During this hands-on training lab, we’ll move through the complete lifecycle of digital experience monitoring, starting with the deployment of the Dynatrace OneAgent and progressing through the configuration of key features:
+
+* Real User Monitoring (RUM): Capture and analyze real-time user interactions across web and mobile applications to understand behavior, performance, and satisfaction.
+* Session Replay: Visualize user sessions to uncover usability issues and performance bottlenecks with pixel-perfect replays.
+* Synthetic Monitoring: Simulate user journeys from global locations to proactively detect and resolve issues before they impact real users.
+
+Participants will then explore Dynatrace’s powerful analytics capabilities to interpret the collected data, identify performance trends, and uncover actionable insights. By the end of the lab, attendees will have a comprehensive understanding of how to leverage Dynatrace to deliver seamless, high-performing digital experiences.
 
 **Lab tasks:**
 
-1. Launch GitHub codespaces container with lab setup
-
-     - Kubernetes cluster running AstroShop demo application
-
-2. Deploy Kubernetes Platform Monitoring + Application Observability
-
-3. Configure and validate Kubernetes log ingest into Dynatrace
-
-4. Ingest CronJob logs
-
-5. Configure advanced log monitoring in Dynatrace
-
-    - Log module feature flags
-    - Sensitive data masking
-    - Timestamp patterns and splitting
-    - Dynatrace component logs for self-monitoring
-
-6. Configure Dynatrace OpenPipeline for log transformation on ingest
-
-7. Analyze logs in context using apps native to the Dynatrace platform
-
-    - Problems
-    - Kubernetes
-    - Distributed Tracing
-    - Services
-
-8. Clean up GitHub codespaces instance
+1. Deploy Dynatrace
+2. Real User Monitoring
+3. Session Replay
+4. Synthetic Monitoring
+5. Problem and Anomaly Detection
 
 ## Technical Specification
 
