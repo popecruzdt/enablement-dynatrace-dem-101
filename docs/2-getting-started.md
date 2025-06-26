@@ -8,6 +8,8 @@ You will need full administrator access to a Dynatrace SaaS tenant with a DPS li
 * Enable OpenTelemetry OneAgent Features
 * Enable Log Enrichment OneAgent Features
 * Generate Dynatrace API Tokens for Kubernetes Observability
+* Install Dynatrace Session Replay Extension for Chrome
+* Install Dynatrace Synthetic Recorder Extension for Chrome
 
 ### Enable OpenTelemetry OneAgent Features
 
@@ -47,6 +49,30 @@ Repeat the following steps for both the `Operator` and `Data Ingest` tokens:
     - For the Data Ingest token, select the template in Template > Kubernetes: Data Ingest. This will automatically add the required scopes ([see Data Ingest token](https://docs.dynatrace.com/docs/shortlink/installation-k8s-tokens-permissions#dataIngestToken){target=_blank})
 * Select Generate token to create the token.
 * Ensure to copy the token and store it in a secure place.  We recommend storing it in a Dynatrace Notebook.
+
+### Install Dynatrace Session Replay Extension for Chrome
+
+Navigate to the extension in the Chrome Web Store using Chrome.
+
+[Chrome Web Store](https://chromewebstore.google.com/detail/session-replay-browser-ex/hjbdnbhpfiionafiooklnafmaojjfljh){target=_blank}
+
+Install the extension.
+
+![Install Extension](./img/getting-started_session_replay_chrome_extension.gif)
+
+### Install Dynatrace Synthetic Recorder Extension for Chrome
+
+Navigate to the extension in the Chrome Web Store using Chrome.
+
+[Chrome Web Store](https://chromewebstore.google.com/detail/dynatrace-synthetic-recor/ambepdkaijjnednbbemlciandnhoanie){target=_blank}
+
+Install the extension.
+
+![Install Extension](./img/getting-started_synthetic_recorder_extension_install.gif)
+
+Configure the extension.
+
+![Configure Extension](./img/getting-started_synthetic_recorder_extension_configure.gif)
 
 ## Continue
 

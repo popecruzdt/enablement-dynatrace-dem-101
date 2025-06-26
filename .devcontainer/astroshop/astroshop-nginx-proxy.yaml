@@ -1,0 +1,83 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: astroshop-nginx-proxy
+spec:
+  selector:
+    matchLabels:
+      run: nginx
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: astroshop-nginx-proxy
+        app.kubernetes.io/part-of: astroshop
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.29
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/nginx/nginx.conf
+          subPath: nginx.conf
+      volumes:
+      - name: config-volume
+        configMap:
+          name: nginx-conf
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+spec:
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  - name: https
+    port: 443
+    protocol: TCP
+    targetPort: 80
+  selector:
+    run: nginx
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-conf
+data:
+  main-snippet: load_module /opt/dynatrace/oneagent/agent/bin/current/linux-musl-x86-64/liboneagentnginx.so;
+  nginx.conf: |
+    user nginx;
+    worker_processes auto;
+    pid /run/nginx.pid;
+    events {
+     worker_connections 1024;
+    }
+    http {
+     sendfile on;
+     tcp_nopush on;
+     tcp_nodelay on;
+     keepalive_timeout 65;
+     types_hash_max_size 2048;
+     access_log on;
+     include /etc/nginx/mime.types;
+     default_type application/octet-stream;
+     access_log /var/log/nginx/access.log;
+
+     upstream frontend {
+     server astroshop-frontend:80;
+     }
+     server {
+     listen 80;
+     server_name localhost;
+     location / {
+     proxy_pass http://astroshop-frontend;
+     }
+     }
+    }
