@@ -1,4 +1,4 @@
-# Enablement Dynatrace Log Ingest 101
+# Enablement Dynatrace DEM 101
 
 ## Lab Overview
 During this hands-on training lab, 
