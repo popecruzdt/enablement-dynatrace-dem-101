@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: astroshop-nginx-proxy
+  name: astroshop-nginxproxy
 spec:
   selector:
     matchLabels:
@@ -11,8 +11,9 @@ spec:
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: astroshop-nginx-proxy
+        app.kubernetes.io/name: astroshop-nginxproxy
         app.kubernetes.io/part-of: astroshop
+        run: nginx
     spec:
       containers:
       - name: nginx
@@ -31,7 +32,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx
+  name: astroshop-nginxproxy
 spec:
   ports:
   - name: http
@@ -71,13 +72,13 @@ data:
      access_log /var/log/nginx/access.log;
 
      upstream frontend {
-     server astroshop-frontend:80;
+     server astroshop-frontend:8080;
      }
      server {
      listen 80;
-     server_name localhost;
+     server_name _;
      location / {
-     proxy_pass http://astroshop-frontend;
+     proxy_pass http://astroshop-frontend:8080;
      }
      }
     }
