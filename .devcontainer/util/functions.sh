@@ -635,10 +635,10 @@ deployAstroshopNginx(){
   
   printInfo "Exposing Astroshop in your dev.container via NodePort 30200"
 
-  printInfo "Change astroshop-frontendproxy service from LoadBalancer to NodePort"
-  kubectl patch service astroshop-frontendproxy --namespace=astroshop --patch='{"spec": {"type": "NodePort"}}'
+  printInfo "Change astroshop-nginxproxy service from LoadBalancer to NodePort"
+  kubectl patch service astroshop-nginxproxy --namespace=astroshop --patch='{"spec": {"type": "NodePort"}}'
 
-  printInfo "Exposing the astroshop-frontendproxy in NodePort 30200"
-  kubectl patch service astroshop-frontendproxy --namespace=astroshop --type='json' --patch='[{"op": "replace", "path": "/spec/ports/0/nodePort", "value":30200}]'
+  printInfo "Exposing the astroshop-nginxproxy in NodePort 30200"
+  kubectl patch service astroshop-nginxproxy --namespace=astroshop --type='json' --patch='[{"op": "replace", "path": "/spec/ports/0/nodePort", "value":30200}]'
 
 }
